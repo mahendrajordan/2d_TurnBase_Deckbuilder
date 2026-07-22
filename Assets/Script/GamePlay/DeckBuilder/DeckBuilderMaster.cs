@@ -3,11 +3,13 @@ using Unity.Mathematics;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.WSA;
+using UnityEngine.UI;
 
 public class DeckBuilderMaster : MonoBehaviour
 {
     PlayerBody playerBody;
     BattleMaster battleMaster;
+    PoolingMaster poolingMaster;
 
     [Header("Card")]
     [SerializeField] CardData[] cardDatas;
@@ -22,8 +24,10 @@ public class DeckBuilderMaster : MonoBehaviour
     [SerializeField] Transform cardHandParent;
     [SerializeField] Transform cardTrashParent;
     [SerializeField] Transform cardOffParent;
+    [SerializeField] Button endTurnBtn;
 
     List<Card> cardOnHandkList = new List<Card>();
+    List<Card> cardOnTrashkList = new List<Card>();
 
     Card CurrentCardSelect;
 
@@ -37,8 +41,9 @@ public class DeckBuilderMaster : MonoBehaviour
     {
         battleMaster = FindAnyObjectByType<BattleMaster>();
         playerBody = battleMaster.playerBody;
+        poolingMaster = PoolingMaster.ins;
 
-        DrawCardOnHand();
+        endTurnBtn.onClick.AddListener(EndTurn);
     }
 #endregion
 
@@ -54,7 +59,11 @@ public class DeckBuilderMaster : MonoBehaviour
                 
             }while(TotalThisCardOnHand(rand) >= limitSameCard);
 
-            Card card = Instantiate(cardPrefab,cardDeckParent.transform.position,quaternion.identity ,cardDeckParent);            
+            //Card card = Instantiate(cardPrefab,cardDeckParent.transform.position,quaternion.identity ,cardDeckParent);            
+            Card card = poolingMaster.GetPoolObject(cardPrefab.gameObject).GetComponent<Card>();
+            card.transform.position = cardDeckParent.transform.position;
+            card.transform.parent = cardDeckParent;
+
             card.Setup(cardDatas[rand], playerBody, cardHandParent, cardTrashParent, cardOffParent);
             card.GetMainInfo(this, battleMaster);
             cardOnHandkList.Add(card);
@@ -106,6 +115,27 @@ public class DeckBuilderMaster : MonoBehaviour
         obj.transform.localScale = Vector2.one * endScale;
         obj.transform.parent = parentTarget;
     }
+
+    public void RemoveAllCardOnHand()
+    {
+        foreach(Card card in cardOnHandkList)
+        {
+            StartCoroutine(MoveCardTo(card.transform, cardTrashParent, 0, 1, 0));                
+            cardOnTrashkList.Add(card);
+        }
+        cardOnHandkList.Clear();
+
+        Invoke("DestoryAllCardOnTrash", .5f);
+    }
+
+    void DestoryAllCardOnTrash()
+    {
+        foreach(Card card in cardOnTrashkList)
+        {
+            poolingMaster.ReturnPoolObject(card.gameObject);
+        }
+        cardOnHandkList.Clear();
+    }
 #endregion
 
 #region Select card
@@ -124,11 +154,23 @@ public class DeckBuilderMaster : MonoBehaviour
 
 #endregion
 
+#region End Turn
+    public void EndTurn()
+    {
+        RemoveAllCardOnHand();
+        battleMaster.GetTurnBaseSystem().PlayNextTurn();
+    }
+#endregion
+
+
+    // mengaktifkan action card 
     public void ActiveCard(MainBody mainBody)
     {
         if(CurrentCardSelect == null) return;
 
         StartCoroutine(MoveCardTo(CurrentCardSelect.transform, cardTrashParent, 0, 1, 0));
+        cardOnHandkList.Remove(CurrentCardSelect);
+        cardOnTrashkList.Add(CurrentCardSelect);
         CurrentCardSelect.ActionCard(mainBody);
     }
 }

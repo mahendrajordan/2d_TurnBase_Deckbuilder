@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dc3955a83bfcf44d93b41dd190191e0, type: 3}
+  m_Name: 02_Defensive Stance
+  m_EditorClassIdentifier: 
+  id: 2
+  name: Defensive Stance
+  cost: 1
+  description: 'Armor + 4
+
+    for 1 turn'
+  cardType: 4
+  attackCount: 1
+  diceAmount: 0
+  dicePoint: 0
+  bonusAttackRoll: 0
+  buffDebuffData: {fileID: 11400000, guid: b55a1a3d01470b443b6142d8b4a6dcd1, type: 2}
+  buffDebuffAmount: 4
+  buffDebuffRound: 1

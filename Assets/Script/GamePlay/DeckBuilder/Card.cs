@@ -31,7 +31,7 @@ public class Card : MonoBehaviour
     Transform baseTrashParent;
     Transform baseOffParent;
     int handIndex;
-    int selectIndex =0; // 0 : sedang unSelect; 1 : sedang select
+    int selectIndex = 0; // 0 : sedang unSelect; 1 : sedang select
 
 #region Setup
     public void Setup(CardData _cardData, MainBody _mainBody, Transform handTransform, Transform trashTransform, Transform offTransform)
@@ -42,6 +42,7 @@ public class Card : MonoBehaviour
         baseHandParent = handTransform;
         baseTrashParent = trashTransform;
         baseOffParent = offTransform;
+        selectIndex = 0;
 
         id = cardData.id;
         name = cardData.name;
@@ -56,7 +57,8 @@ public class Card : MonoBehaviour
         this.name = name;
         nameTxt.text = name;
         costTxt.text = cost.ToString();
-        descriptionTxt.text = description.Replace("{dmg}", mainBody.characterBaseDamageRoll.ToString());
+        int dmg = mainBody.characterBaseDamageRoll + mainBody.CharacterDamageRollBonus;
+        descriptionTxt.text = description.Replace("{dmg}", dmg.ToString());
 
         btn = GetComponent<Button>();
         btn.onClick.RemoveAllListeners();
@@ -158,6 +160,15 @@ public class Card : MonoBehaviour
         {
             StartCoroutine(Attack(target));
         }
+        if(cardType == CardType.DamageAndDebuff || cardType == CardType.Debuff)
+        {
+            GiveBuffDebuff(target);
+        }
+        if(cardType == CardType.DamageAndBuff || cardType == CardType.Buff)
+        {
+            MainBody newTarget = battleMaster.playerBody;
+            GiveBuffDebuff(newTarget);
+        }
         
         deckBuilderMaster.SetCurrentCardSelect(null);
 
@@ -171,7 +182,7 @@ public class Card : MonoBehaviour
     {
         for(int i=0; i< attackCount; i++)
         {
-            target.healtHandler.TakeDamage(GetDmg(), GetAttackRoll());
+            target.healtHandler.TakeDamage(GetDmg(), GetAttackRoll(), diceAmount);
             yield return new WaitForSeconds(.1f);
         }
     }
@@ -179,9 +190,9 @@ public class Card : MonoBehaviour
     int GetDmg()
     {
         int minDmg = diceAmount;
-        int maxDmg = diceAmount * dicePoint;
+        int maxDmg = diceAmount * (mainBody.CharacterDamagePerDiceBonus + dicePoint);
         int dmg = Random.Range(minDmg, maxDmg);
-        dmg += mainBody.characterBaseDamageRoll;
+        dmg += mainBody.characterBaseDamageRoll + mainBody.CharacterDamageRollBonus;
 
         return dmg;
     }
@@ -189,8 +200,19 @@ public class Card : MonoBehaviour
     int GetAttackRoll()
     {
         int attackRoll = Random.Range(1, 20);
-        attackRoll += mainBody.characterBaseAttackRoll + bonusAttackRoll;
+        attackRoll += mainBody.characterBaseAttackRoll + mainBody.CharacterAttckRollBonus + bonusAttackRoll;
         return attackRoll;
+    }
+#endregion
+
+#region Buff Debuff
+    void GiveBuffDebuff(MainBody target)
+    {
+        bool isStackAble = cardData.buffDebuffData.stackAble;
+        if(isStackAble)
+            target.buffDebuffHandler.TakeEffect(cardData.buffDebuffData, cardData.buffDebuffAmount, cardData.buffDebuffRound);
+        else
+            target.buffDebuffHandler.TakeEffectUnStackAble(cardData.buffDebuffData, cardData.buffDebuffRound);
     }
 #endregion
 

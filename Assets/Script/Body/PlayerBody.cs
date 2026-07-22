@@ -8,11 +8,12 @@ public class PlayerBody : MainBody
         
 
         healtHandler.Setup(this);
+        buffDebuffHandler.Setup(this);
     }
 
     public override void Isdead()
     {
         base.Isdead();
-        //gameover;
+        battleMaster.PlayerIsDead();
     }
 }
