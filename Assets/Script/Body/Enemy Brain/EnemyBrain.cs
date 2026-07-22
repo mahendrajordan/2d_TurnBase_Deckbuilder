@@ -67,7 +67,7 @@ public class EnemyBrain : MonoBehaviour
             target = turnBaseSystem.GetPlayerBody();
             StartCoroutine(Attack(cardData, target));
         }        
-        if(cardData.cardType == CardType.DamageAndDebuff || cardData.cardType == CardType.Debuff)
+        if(cardData.cardType == CardType.Debuff)
         {
             target = turnBaseSystem.GetPlayerBody();
             GiveBuffDebuff(cardData, target);
@@ -89,7 +89,17 @@ public class EnemyBrain : MonoBehaviour
 
         for(int i=0; i< attackCount; i++)
         {
-            target.healtHandler.TakeDamage(GetDmg(cardData), GetAttackRoll(cardData), cardData.diceAmount);
+            if(!target.healtHandler.IsGetHit(GetAttackRoll(cardData))) continue;
+
+            target.healtHandler.TakeDamage(GetDmg(cardData), cardData.diceAmount);
+
+            //khusus "CardType.DamageAndDebuff" harus kena target
+            if(cardData.cardType == CardType.DamageAndDebuff)
+            {
+                target = turnBaseSystem.GetPlayerBody();
+                GiveBuffDebuff(cardData, target);
+            }
+
             yield return new WaitForSeconds(.1f);
         }
     }
@@ -101,7 +111,7 @@ public class EnemyBrain : MonoBehaviour
 
         int minDmg = diceAmount;
         int maxDmg = diceAmount * dicePoint;
-        int dmg = Random.Range(minDmg, maxDmg);
+        int dmg = Random.Range(minDmg, maxDmg + 1);
         dmg += enemyBody.characterBaseDamageRoll + enemyBody.CharacterDamageRollBonus;
 
         return dmg;
@@ -110,7 +120,7 @@ public class EnemyBrain : MonoBehaviour
     int GetAttackRoll(CardData cardData)
     {
         int bonusAttackRoll = cardData.bonusAttackRoll;
-        int attackRoll = Random.Range(1, 20);
+        int attackRoll = Random.Range(1, 21);
         attackRoll += enemyBody.characterBaseAttackRoll + enemyBody.CharacterAttckRollBonus + bonusAttackRoll;
         return attackRoll;
     }

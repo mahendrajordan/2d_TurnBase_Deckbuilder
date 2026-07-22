@@ -30,16 +30,9 @@ public class HealtHandler : MonoBehaviour
         UpdateUi();
     }
 
-    public void TakeDamage(int dmg, int attackRoll, int diceAmount)
+    public void TakeDamage(int dmg, int diceAmount)
     {
-        int totalArmorClass = baseArmorClass + mainBody.CharacterArmorClassBonus; Debug.Log($"totalArmorClass : {totalArmorClass}");
         int totalDmg = dmg + (diceAmount * mainBody.CharacterDamagePerDiceTake);
-
-        if(attackRoll< totalArmorClass)
-        {
-            SpawnDamage("miss", true);
-            return;
-        }
 
         SpawnDamage(dmg.ToString(), true);
         currentHealt -= dmg;
@@ -50,6 +43,17 @@ public class HealtHandler : MonoBehaviour
             mainBody.Isdead();
         }
         UpdateUi();
+    }
+
+    public bool IsGetHit(int attackRoll)
+    {
+        int totalArmorClass = baseArmorClass + mainBody.CharacterArmorClassBonus;
+        if(attackRoll< totalArmorClass)
+        {
+            SpawnDamage("miss", true);
+            return false;
+        }
+        return true;
     }
 
     public void TakeDotDamage(int dmg)

@@ -44,7 +44,8 @@ public class BuffDebuffHandler : MonoBehaviour
                     AddEffectTotalAmount(buffDebuffData, -effectData.effectAmount, buffDebuffData.stackAble);
                     effectDataTemp.Add(effectData);
 
-                    if(effectTotalAmount[buffDebuffData]<=0)RemoveIcon(buffDebuffData);
+                    //check untuk merubah status berdasarkan total buff nya
+                    IconCheck(buffDebuffData);
                 }
             }
 
@@ -149,7 +150,7 @@ public class BuffDebuffHandler : MonoBehaviour
 
         int minDmg = diceAmount * dotAmount;
         int maxDmg = dicePoint * dotAmount;
-        int totalDmg = Random.Range(minDmg, maxDmg);
+        int totalDmg = Random.Range(minDmg, maxDmg + 1);
         if(totalDmg==0) return;
         healtHandler.TakeDotDamage(totalDmg);
     }
@@ -173,9 +174,23 @@ public class BuffDebuffHandler : MonoBehaviour
         }
     }
 
+    void IconCheck(BuffDebuffData buffDebuffData)
+    {        
+        if(effectTotalAmount[buffDebuffData]<=0)
+            RemoveIcon(buffDebuffData);
+        else
+            UpdateIconInfo(buffDebuffData);
+    }
+
     void RemoveIcon(BuffDebuffData buffDebuffData)
     {
         BuffDebuffIcons[buffDebuffData].gameObject.SetActive(false);
+    }
+
+    void UpdateIconInfo(BuffDebuffData buffDebuffData)
+    {
+        int buffAmount = effectTotalAmount[buffDebuffData];
+        BuffDebuffIcons[buffDebuffData].Setup(buffDebuffData, buffAmount);
     }
 #endregion
 

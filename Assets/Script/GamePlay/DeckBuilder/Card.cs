@@ -160,7 +160,7 @@ public class Card : MonoBehaviour
         {
             StartCoroutine(Attack(target));
         }
-        if(cardType == CardType.DamageAndDebuff || cardType == CardType.Debuff)
+        if(cardType == CardType.Debuff)
         {
             GiveBuffDebuff(target);
         }
@@ -182,7 +182,15 @@ public class Card : MonoBehaviour
     {
         for(int i=0; i< attackCount; i++)
         {
-            target.healtHandler.TakeDamage(GetDmg(), GetAttackRoll(), diceAmount);
+            if(!target.healtHandler.IsGetHit(GetAttackRoll()) ) continue;
+
+            target.healtHandler.TakeDamage(GetDmg(),  diceAmount);
+            //khusus "CardType.DamageAndDebuff" harus kena target
+            if(cardType == CardType.DamageAndDebuff)
+            {
+                GiveBuffDebuff(target);
+            }
+
             yield return new WaitForSeconds(.1f);
         }
     }
@@ -191,7 +199,7 @@ public class Card : MonoBehaviour
     {
         int minDmg = diceAmount;
         int maxDmg = diceAmount * (mainBody.CharacterDamagePerDiceBonus + dicePoint);
-        int dmg = Random.Range(minDmg, maxDmg);
+        int dmg = Random.Range(minDmg, maxDmg + 1);
         dmg += mainBody.characterBaseDamageRoll + mainBody.CharacterDamageRollBonus;
 
         return dmg;
@@ -199,7 +207,7 @@ public class Card : MonoBehaviour
 
     int GetAttackRoll()
     {
-        int attackRoll = Random.Range(1, 20);
+        int attackRoll = Random.Range(1, 21);
         attackRoll += mainBody.characterBaseAttackRoll + mainBody.CharacterAttckRollBonus + bonusAttackRoll;
         return attackRoll;
     }
