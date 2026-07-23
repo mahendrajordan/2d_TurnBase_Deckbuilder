@@ -28,7 +28,7 @@ public class MainBody : MonoBehaviour
     protected int characterDamagePerDiceBonus;
     protected int characterDamagePerDiceTake;
 
-    void Awake()
+    void Start()
     {
         Setup();
     }
