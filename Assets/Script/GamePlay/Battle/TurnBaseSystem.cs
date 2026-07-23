@@ -16,7 +16,7 @@ public class TurnBaseSystem : MonoBehaviour
     int round = 1;
     int maxTurn;
     int currentTurn;
-
+    bool isCheckingEffect = false;
 
     public void SetupTurnBaseSystem(PlayerBody _playerBody, EnemyBody[] _enemyBodys)
     {
@@ -70,11 +70,13 @@ public class TurnBaseSystem : MonoBehaviour
         round++;
 
         //check all buff and debuff
+        isCheckingEffect = true;
         playerBody.buffDebuffHandler.CheckAllEffect();
         foreach(EnemyBody enemyBody in enemyBodyList)
         {
             enemyBody.buffDebuffHandler.CheckAllEffect();
         }
+        isCheckingEffect = false;
 
         //check apakah ada enemy yg sudah mati
         foreach(EnemyBody enemyBody in enemyBodyDeadTempList)
@@ -87,7 +89,12 @@ public class TurnBaseSystem : MonoBehaviour
     public void RemoveEnemy(EnemyBody enemyBody)
     {
         maxTurn--;
-        enemyBodyDeadTempList.Add(enemyBody);
+
+        //check apakah mati ketika sedang proses check effect, jika iya maka akan di simpan di list sementara
+        if(isCheckingEffect)
+            enemyBodyDeadTempList.Add(enemyBody);
+        else
+            enemyBodyList.Remove(enemyBody);
     }
 
     public PlayerBody GetPlayerBody()=> playerBody;

@@ -486,50 +486,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GamePlay
       objectReference: {fileID: 0}
-    - target: {fileID: 2479903586229551477, guid: f5f7de6c78331b14ab3e581192274b45, type: 3}
-      propertyPath: rewardCardData.Array.size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2479903586229551477, guid: f5f7de6c78331b14ab3e581192274b45, type: 3}
-      propertyPath: 'rewardCardData.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 2bb3ec1e8fc58f74e8fb9925017b2ae5, type: 2}
-    - target: {fileID: 2479903586229551477, guid: f5f7de6c78331b14ab3e581192274b45, type: 3}
-      propertyPath: 'rewardCardData.Array.data[1]'
-      value: 
-      objectReference: {fileID: 11400000, guid: a97a9c9bbc565d5499a0479ac7d63f5b, type: 2}
-    - target: {fileID: 2479903586229551477, guid: f5f7de6c78331b14ab3e581192274b45, type: 3}
-      propertyPath: 'rewardCardData.Array.data[2]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 0b52b2c66c331314396de0df3749f260, type: 2}
-    - target: {fileID: 2479903586229551477, guid: f5f7de6c78331b14ab3e581192274b45, type: 3}
-      propertyPath: 'rewardCardData.Array.data[3]'
-      value: 
-      objectReference: {fileID: 11400000, guid: c2e454912234aaa4eaab2040fa298d91, type: 2}
-    - target: {fileID: 2479903586229551477, guid: f5f7de6c78331b14ab3e581192274b45, type: 3}
-      propertyPath: 'rewardCardData.Array.data[4]'
-      value: 
-      objectReference: {fileID: 11400000, guid: c2c327d8cea082c4889d2bab8ed51736, type: 2}
-    - target: {fileID: 2479903586229551477, guid: f5f7de6c78331b14ab3e581192274b45, type: 3}
-      propertyPath: 'rewardCardData.Array.data[5]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 1b0289eea1237cb4f9590df1cd45d57c, type: 2}
-    - target: {fileID: 2479903586229551477, guid: f5f7de6c78331b14ab3e581192274b45, type: 3}
-      propertyPath: 'rewardCardData.Array.data[6]'
-      value: 
-      objectReference: {fileID: 11400000, guid: b15b270ff1a87724d851cd1d49465da1, type: 2}
-    - target: {fileID: 2479903586229551477, guid: f5f7de6c78331b14ab3e581192274b45, type: 3}
-      propertyPath: 'rewardCardData.Array.data[7]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 6feea39af51e6e547b5156edd968391c, type: 2}
-    - target: {fileID: 2479903586229551477, guid: f5f7de6c78331b14ab3e581192274b45, type: 3}
-      propertyPath: 'rewardCardData.Array.data[8]'
-      value: 
-      objectReference: {fileID: 11400000, guid: b2a1229d1fc1f464bbac9afdf8270017, type: 2}
-    - target: {fileID: 2479903586229551477, guid: f5f7de6c78331b14ab3e581192274b45, type: 3}
-      propertyPath: 'rewardCardData.Array.data[9]'
-      value: 
-      objectReference: {fileID: 11400000, guid: bfe0711d7f8c40f43995e2e61419863e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

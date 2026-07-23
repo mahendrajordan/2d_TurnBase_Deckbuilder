@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BattleMaster : MonoBehaviour
 {
@@ -136,13 +137,19 @@ public class BattleMaster : MonoBehaviour
         {
             enemyAmount =0;
             gamePlayCondition = GamePlayCondition.win;
-            winLoseSystem.ShowWinPanel();
+
+            int currenSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            int maxSceneIndex = SceneManager.sceneCountInBuildSettings;
+            if(currenSceneIndex == maxSceneIndex-1)
+                winLoseSystem.ShowFinishPanel();
+            else
+                winLoseSystem.ShowWinPanel();
         }
     }
 
     public void PlayerIsDead()
     {
-        gamePlayCondition = GamePlayCondition.Lose;
+        gamePlayCondition = GamePlayCondition.Lose;        
         winLoseSystem.ShowLosePanel();
     }
 #endregion

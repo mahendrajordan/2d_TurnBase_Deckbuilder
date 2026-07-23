@@ -30,6 +30,10 @@ public class WinLoseSystem : MonoBehaviour
     [SerializeField] GameObject losePanel;
     [SerializeField] Button mainMenuBtn;
 
+    [Header("Finish Game")]    
+    [SerializeField] GameObject finishPanel;
+    [SerializeField] Button finishBtn;
+
     void Start()
     {
         Setup();
@@ -47,6 +51,7 @@ public class WinLoseSystem : MonoBehaviour
 
         mainMenuBtn.onClick.AddListener(()=> SceneManager.LoadScene(0));
         nextStageBtn.onClick.AddListener(()=> GoNextScene());
+        finishBtn.onClick.AddListener(()=> SceneManager.LoadScene(0));
 
         GetRewardCardCanUse();
     }
@@ -61,10 +66,14 @@ public class WinLoseSystem : MonoBehaviour
     }
 #endregion
 
+#region Showh Panel
     public void ShowWinPanel()
     {
         panel.SetActive(true);
         winPanel.SetActive(true);
+        losePanel.SetActive(false);
+        finishPanel.SetActive(false);
+
         CreateRewardDeck();
         CreateMainDeck();
 
@@ -74,8 +83,19 @@ public class WinLoseSystem : MonoBehaviour
     public void ShowLosePanel()
     {
         panel.SetActive(true);
+        winPanel.SetActive(false);
         losePanel.SetActive(true);
+        finishPanel.SetActive(false);
     }
+
+    public void ShowFinishPanel()
+    {
+        panel.SetActive(true);
+        winPanel.SetActive(false);
+        losePanel.SetActive(false);
+        finishPanel.SetActive(true);
+    }
+#endregion
 
 #region RewardDeck
     void CreateRewardDeck()
