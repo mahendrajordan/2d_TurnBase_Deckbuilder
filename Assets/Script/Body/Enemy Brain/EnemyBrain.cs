@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
@@ -10,7 +11,10 @@ public class EnemyBrain : MonoBehaviour
     [SerializeField] int currentEnergy;
 
     [SerializeField] CardData[] cardDatas;
+    [SerializeField] Card cardPrefab;
+    [SerializeField] Transform cardHandParent;
     [SerializeField] float thinkTime = .1f;
+    List<Card> cardLists = new List<Card>();
 
     [Header("Card Use Info")]
     [SerializeField] InfoSpawner textObj;
@@ -22,6 +26,21 @@ public class EnemyBrain : MonoBehaviour
     {
         enemyBody = _enmyBody;
         turnBaseSystem = enemyBody.GetTurnBaseSystem();
+        CreateCard();
+    }
+
+    void CreateCard()
+    {
+        for(int i = 0; i < cardDatas.Length; i++)
+        {
+            Card newCard = enemyBody.poolingMaster.GetPoolObject(cardPrefab.gameObject).GetComponent<Card>();
+            newCard.Setup(cardDatas[i], enemyBody, cardHandParent, cardHandParent, cardHandParent);
+            newCard.GetMainInfo(enemyBody.GetDeckBuilderMaster(), enemyBody.GetBattleMaster());
+
+            newCard.transform.position = cardHandParent.position;
+            newCard.transform.SetParent(cardHandParent);
+            cardLists.Add(newCard);
+        }
     }
 
 #region  Turn Base
@@ -47,7 +66,8 @@ public class EnemyBrain : MonoBehaviour
             canPlay = currentEnergy>=0 && cardOnHand >0; 
             if(canPlay)
             {
-                Action(cardData);
+                cardLists[rand].ActionCard(enemyBody.GetBattleMaster().playerBody);
+                SpawnCardName(cardData.name);
                 cardOnHand--;
             }
 
@@ -55,85 +75,6 @@ public class EnemyBrain : MonoBehaviour
         
 
         turnBaseSystem.PlayNextTurn();
-    }
-#endregion
-
-#region Play Action
-    public void Action(CardData cardData )
-    {
-        MainBody target;
-        if(cardData.cardType == CardType.Damage || cardData.cardType == CardType.DamageAndBuff ||cardData.cardType == CardType.DamageAndDebuff)
-        {            
-            target = turnBaseSystem.GetPlayerBody();
-            StartCoroutine(Attack(cardData, target));
-        }        
-        if(cardData.cardType == CardType.Debuff)
-        {
-            target = turnBaseSystem.GetPlayerBody();
-            GiveBuffDebuff(cardData, target);
-        }
-        if(cardData.cardType == CardType.DamageAndBuff || cardData.cardType == CardType.Buff)
-        {
-            MainBody newTarget = enemyBody;
-            GiveBuffDebuff(cardData, newTarget);
-        }
-
-        SpawnCardName(cardData.name);
-    }    
-#endregion
-
-#region Attack
-    IEnumerator Attack(CardData cardData, MainBody target)
-    {
-        int attackCount = cardData.attackCount;
-
-        for(int i=0; i< attackCount; i++)
-        {
-            if(!target.healtHandler.IsGetHit(GetAttackRoll(cardData))) continue;
-
-            target.healtHandler.TakeDamage(GetDmg(cardData), cardData.diceAmount);
-
-            //khusus "CardType.DamageAndDebuff" harus kena target
-            if(cardData.cardType == CardType.DamageAndDebuff)
-            {
-                target = turnBaseSystem.GetPlayerBody();
-                GiveBuffDebuff(cardData, target);
-            }
-
-            yield return new WaitForSeconds(.1f);
-        }
-    }
-
-    int GetDmg(CardData cardData)
-    {
-        int diceAmount = cardData.diceAmount;
-        int dicePoint = cardData.dicePoint;
-
-        int minDmg = diceAmount;
-        int maxDmg = diceAmount * dicePoint;
-        int dmg = Random.Range(minDmg, maxDmg + 1);
-        dmg += enemyBody.characterBaseDamageRoll + enemyBody.CharacterDamageRollBonus;
-
-        return dmg;
-    }
-
-    int GetAttackRoll(CardData cardData)
-    {
-        int bonusAttackRoll = cardData.bonusAttackRoll;
-        int attackRoll = Random.Range(1, 21);
-        attackRoll += enemyBody.characterBaseAttackRoll + enemyBody.CharacterAttckRollBonus + bonusAttackRoll;
-        return attackRoll;
-    }
-#endregion
-
-#region Buff Debuff
-    void GiveBuffDebuff(CardData cardData, MainBody target)
-    {
-        bool isStackAble = cardData.buffDebuffData.stackAble;
-        if(isStackAble)
-            target.buffDebuffHandler.TakeEffect(cardData.buffDebuffData, cardData.buffDebuffAmount, cardData.buffDebuffRound);
-        else
-            target.buffDebuffHandler.TakeEffectUnStackAble(cardData.buffDebuffData, cardData.buffDebuffRound);
     }
 #endregion
 

@@ -166,7 +166,7 @@ public class Card : MonoBehaviour
         }
         if(cardType == CardType.DamageAndBuff || cardType == CardType.Buff)
         {
-            MainBody newTarget = battleMaster.playerBody;
+            MainBody newTarget = mainBody;
             GiveBuffDebuff(newTarget);
         }
         

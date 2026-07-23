@@ -4,6 +4,7 @@ public class MainBody : MonoBehaviour
 {
     protected BattleMaster battleMaster;
     protected TurnBaseSystem turnBaseSystem;
+    protected DeckBuilderMaster deckBuilderMaster;
 
     public PoolingMaster poolingMaster  { get; private set; }
 
@@ -38,6 +39,7 @@ public class MainBody : MonoBehaviour
     {
         battleMaster = FindAnyObjectByType<BattleMaster>();
         turnBaseSystem = FindAnyObjectByType<TurnBaseSystem>();
+        deckBuilderMaster = FindAnyObjectByType<DeckBuilderMaster>();
         poolingMaster = PoolingMaster.ins;
 
         characterName = CharacterData.name;
@@ -70,5 +72,10 @@ public class MainBody : MonoBehaviour
     public int CharacterDamagePerDiceBonus { get{ return characterDamagePerDiceBonus;} set{characterDamagePerDiceBonus = value;} }
     public int CharacterDamagePerDiceTake { get{ return characterDamagePerDiceTake;} set{characterDamagePerDiceTake = value;} }
 #endregion
+
+    
+    public BattleMaster GetBattleMaster() => battleMaster;
+    public TurnBaseSystem GetTurnBaseSystem() => turnBaseSystem;
+    public DeckBuilderMaster GetDeckBuilderMaster() => deckBuilderMaster;
 
 }

@@ -23,5 +23,4 @@ public class EnemyBody : MainBody
     }
 
     public EnemyBrain GetEnemyBrain() => enemyBrain;
-    public TurnBaseSystem GetTurnBaseSystem() => turnBaseSystem;
 }
