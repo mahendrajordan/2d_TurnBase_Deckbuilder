@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.WSA;
 using UnityEngine.UI;
+using TMPro;
 
 public class DeckBuilderMaster : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class DeckBuilderMaster : MonoBehaviour
 
     [Header("Deck")]
     [SerializeField] int totalUseCard = 2;
+    int currentUsecard = 0;
+    [SerializeField] TextMeshProUGUI totalUseCardTxt;
     [SerializeField] int totalDeckOnHand = 5;
     
     [SerializeField] Transform cardDeckParent;
@@ -30,6 +33,11 @@ public class DeckBuilderMaster : MonoBehaviour
     List<Card> cardOnTrashkList = new List<Card>();
 
     Card CurrentCardSelect;
+
+    void Awake()
+    {
+        cardDatas = DeckSaver.ins.CardDataList.ToArray();        
+    }
 
     void Start()
     {
@@ -72,6 +80,7 @@ public class DeckBuilderMaster : MonoBehaviour
             card.SetCardHandIndex(i);
             StartCoroutine(MoveCardTo(card.transform, cardHandParent, i));
         }
+        ResetUseCard();
     }
 
     //melimit kartu yg sama di tangan maksimal 3
@@ -150,6 +159,23 @@ public class DeckBuilderMaster : MonoBehaviour
         {
             cardOnHandkList[i].UnSelectThisCard();
         }
+    }
+
+    public void UseThisChard(int n)
+    {
+        currentUsecard += n;
+        totalUseCardTxt.text = $"{totalUseCard-currentUsecard}";
+    }
+    void ResetUseCard()
+    {
+        currentUsecard = 0;
+        totalUseCardTxt.text = $"{totalUseCard-currentUsecard}";
+    }
+
+    public bool CanUseCard(int cost)
+    {
+        int totalCost = currentUsecard + cost;
+        return totalCost <= totalUseCard;
     }
 
 #endregion

@@ -10,13 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dc3955a83bfcf44d93b41dd190191e0, type: 3}
-  m_Name: 09_Quick Attack
+  m_Name: 09_Improved Rage
   m_EditorClassIdentifier: 
   id: 9
-  name: Quick Attack
-  cost: 0
-  description: Damage 1d2 + {dmg}
-  cardType: 0
-  diceAmount: 1
-  dicePoint: 2
+  name: Improved Rage
+  cost: 1
+  description: "Damage Roll + 4 \nArmor Class - 4\nfor 2 turn"
+  cardType: 4
+  attackCount: 1
+  diceAmount: 0
+  dicePoint: 0
   bonusAttackRoll: 0
+  bonusDamageRollMultiple: 1
+  buffDebuffData: {fileID: 11400000, guid: 188cfc818e164dc4a83f60ed24f6edbf, type: 2}
+  buffDebuffAmount: 1
+  buffDebuffRound: 2

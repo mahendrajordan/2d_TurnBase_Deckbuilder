@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dc3955a83bfcf44d93b41dd190191e0, type: 3}
+  m_Name: 10_Greater Rage
+  m_EditorClassIdentifier: 
+  id: 10
+  name: Greater Rage
+  cost: 2
+  description: "Damage Roll + 6 \nArmor Class - 6\nfor 2 turn"
+  cardType: 4
+  attackCount: 1
+  diceAmount: 0
+  dicePoint: 0
+  bonusAttackRoll: 0
+  bonusDamageRollMultiple: 1
+  buffDebuffData: {fileID: 11400000, guid: 188cfc818e164dc4a83f60ed24f6edbf, type: 2}
+  buffDebuffAmount: 1
+  buffDebuffRound: 2

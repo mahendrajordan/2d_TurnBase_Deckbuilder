@@ -28,6 +28,7 @@ public class CardDataEditor : Editor
             data.diceAmount = EditorGUILayout.IntField("Dice Amount", data.diceAmount);
             data.dicePoint = EditorGUILayout.IntField("Dice Point", data.dicePoint);
             data.bonusAttackRoll = EditorGUILayout.IntField("Bonus Attack Roll", data.bonusAttackRoll);
+            data.bonusDamageRollMultiple = EditorGUILayout.IntSlider("Bonus Damage Roll Multiple", data.bonusDamageRollMultiple, 0, 10);
         }
 
         if(data.cardType == CardType.DamageAndDebuff || data.cardType == CardType.DamageAndBuff || data.cardType == CardType.Debuff || data.cardType == CardType.Buff)

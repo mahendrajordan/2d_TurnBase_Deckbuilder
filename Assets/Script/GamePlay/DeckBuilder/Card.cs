@@ -57,7 +57,7 @@ public class Card : MonoBehaviour
         this.name = name;
         nameTxt.text = name;
         costTxt.text = cost.ToString();
-        int dmg = mainBody.characterBaseDamageRoll + mainBody.CharacterDamageRollBonus;
+        int dmg = (mainBody.characterBaseDamageRoll + mainBody.CharacterDamageRollBonus) * cardData.bonusDamageRollMultiple;
         descriptionTxt.text = description.Replace("{dmg}", dmg.ToString());
 
         btn = GetComponent<Button>();
@@ -80,6 +80,8 @@ public class Card : MonoBehaviour
 #region SelectCard
     void SelectCard()
     {
+        if(!deckBuilderMaster.CanUseCard(cardData.cost)) return;
+
         if(selectIndex == 0)
             SelectThisCard();
         else
@@ -171,6 +173,7 @@ public class Card : MonoBehaviour
         }
         
         deckBuilderMaster.SetCurrentCardSelect(null);
+        if(mainBody.GetComponent<PlayerBody>())deckBuilderMaster.UseThisChard(cardData.cost);
 
         battleMaster.ActiveSelectAllEnemy(false);
         battleMaster.ActiveSelectPlayer(false);
@@ -200,7 +203,7 @@ public class Card : MonoBehaviour
         int minDmg = diceAmount;
         int maxDmg = diceAmount * (mainBody.CharacterDamagePerDiceBonus + dicePoint);
         int dmg = Random.Range(minDmg, maxDmg + 1);
-        dmg += mainBody.characterBaseDamageRoll + mainBody.CharacterDamageRollBonus;
+        dmg += (mainBody.characterBaseDamageRoll + mainBody.CharacterDamageRollBonus) * cardData.bonusDamageRollMultiple;
 
         return dmg;
     }

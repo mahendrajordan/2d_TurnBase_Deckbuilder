@@ -14,6 +14,7 @@ public class CardData : ScriptableObject
     public int diceAmount = 0;
     public int dicePoint = 0;
     public int bonusAttackRoll = 0;
+    public int bonusDamageRollMultiple = 1;
 
     public BuffDebuffData buffDebuffData;
     public int buffDebuffAmount;

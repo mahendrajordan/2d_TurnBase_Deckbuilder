@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class BattleMaster : MonoBehaviour
@@ -5,6 +7,7 @@ public class BattleMaster : MonoBehaviour
     public GamePlayCondition gamePlayCondition;
     MainInputSystem mainInputSystem;
     DeckBuilderMaster deckBuilderMaster;
+    WinLoseSystem winLoseSystem;
     [SerializeField] TurnBaseSystem turnBaseSystem;
 
     public PlayerBody playerBody;
@@ -15,6 +18,10 @@ public class BattleMaster : MonoBehaviour
     MainBody mainTarget;
 
     BuffDebuffIcon CurrentBuffDebuffIconSelect;
+
+    [Header("UI")]
+    [SerializeField] CanvasGroup turnPanel;
+    [SerializeField] TextMeshProUGUI turnText;
 
     void Awake()
     {
@@ -31,6 +38,7 @@ public class BattleMaster : MonoBehaviour
     {
         mainInputSystem = new MainInputSystem();
         deckBuilderMaster = FindAnyObjectByType<DeckBuilderMaster>();
+        winLoseSystem = FindAnyObjectByType<WinLoseSystem>();
         enemyAmount = enemyBodys.Length;
 
         turnBaseSystem.SetupTurnBaseSystem(playerBody, enemyBodys);
@@ -118,7 +126,7 @@ public class BattleMaster : MonoBehaviour
     }
 #endregion
 
-#region Player & enemy    
+#region Player & enemy Dead
     public void RemoveEnemy(EnemyBody enemyBody)
     {
         enemyAmount--;    
@@ -128,13 +136,40 @@ public class BattleMaster : MonoBehaviour
         {
             enemyAmount =0;
             gamePlayCondition = GamePlayCondition.win;
+            winLoseSystem.ShowWinPanel();
         }
     }
 
     public void PlayerIsDead()
     {
         gamePlayCondition = GamePlayCondition.Lose;
+        winLoseSystem.ShowLosePanel();
     }
+#endregion
+
+#region UI
+    public IEnumerator ShowTurnPanel(string n)
+    {
+        turnText.text = n;
+        turnPanel.alpha = 1;
+
+        yield return new WaitForSeconds(1f);
+
+        float duration = .5f;
+        float timer = 0;
+        float lerpPoint = 0;
+
+        do
+        {
+            timer += Time.deltaTime;
+            lerpPoint = timer/duration;
+            float alpha = Mathf.Lerp(1, 0, lerpPoint);
+            turnPanel.alpha = alpha;
+            yield return null;
+        }while(lerpPoint<1);
+        turnPanel.alpha = 0;
+    }
+
 #endregion
 
 #region Enable Disable

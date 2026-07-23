@@ -73,7 +73,7 @@ public class EnemyBrain : MonoBehaviour
 
         }while(canPlay);
         
-
+        yield return new WaitForSeconds(1);
         turnBaseSystem.PlayNextTurn();
     }
 #endregion
