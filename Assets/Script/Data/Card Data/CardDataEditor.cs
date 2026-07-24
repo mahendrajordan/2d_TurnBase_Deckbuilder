@@ -21,7 +21,7 @@ public class CardDataEditor : Editor
         EditorGUILayout.Space(25);
         data.cardType = (CardType) EditorGUILayout.EnumPopup("Card Type", data.cardType);
 
-        if(data.cardType == CardType.Damage || data.cardType == CardType.DamageAndDebuff || data.cardType == CardType.DamageAndBuff)
+        if(data.cardType == CardType.Damage || data.cardType == CardType.DamageAndDebuff || data.cardType == CardType.DamageAndBuff || data.cardType == CardType.DamageAndSkill)
         {
             EditorGUILayout.LabelField("Damage Info", EditorStyles.boldLabel);
             data.attackCount = EditorGUILayout.IntSlider("Attack Count", data.attackCount, 1, 8);
@@ -40,7 +40,7 @@ public class CardDataEditor : Editor
             data.buffDebuffRound = EditorGUILayout.IntField("Buff Debuff Round", data.buffDebuffRound);
         }
 
-        if(data.cardType == CardType.skill)
+        if(data.cardType == CardType.Skill || data.cardType == CardType.DamageAndSkill)
         {
             EditorGUILayout.Space(25);
             EditorGUILayout.LabelField("Card Effect", EditorStyles.boldLabel);

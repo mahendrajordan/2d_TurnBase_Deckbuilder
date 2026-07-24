@@ -947,6 +947,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bfe0711d7f8c40f43995e2e61419863e, type: 2}
   - {fileID: 11400000, guid: 3c1b89f0bfeab194184188ef558afcce, type: 2}
   - {fileID: 11400000, guid: 8e0f15ed9f5a44e489e0b030c4b71adf, type: 2}
+  - {fileID: 11400000, guid: 9039f04ff5de68c4ca296c6fb348f498, type: 2}
   cardInterfacePrefab: {fileID: 228887635029205723, guid: 579d34b52c494d2448043c83db477958, type: 3}
   deckSetupPanel: {fileID: 431056452}
   cardListParent: {fileID: 878758640}

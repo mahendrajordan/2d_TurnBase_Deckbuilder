@@ -57,7 +57,6 @@ public class MainMenu : MonoBehaviour
 
     bool HaveThisCard(CardData cardData)
     {
-        Debug.Log($"card data {cardData.name} = {cardInterfaceList.Count(x=> x.GetCardData() == cardData)}");
         return cardInterfaceList.Count(x=> x.GetCardData() == cardData) > 0;
     }
 

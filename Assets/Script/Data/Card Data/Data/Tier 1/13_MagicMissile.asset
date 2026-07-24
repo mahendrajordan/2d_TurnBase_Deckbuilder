@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dc3955a83bfcf44d93b41dd190191e0, type: 3}
-  m_Name: 11_Quick Attack
+  m_Name: 13_MagicMissile
   m_EditorClassIdentifier: 
-  id: 11
-  name: Quick Attack
+  id: 13
+  name: Magic Missile
   cost: 0
-  description: Damage 1d4
-  cardType: 0
+  description: "Damage 1d2 \nGain +3 per \ndie used."
+  cardType: 6
   attackCount: 1
   diceAmount: 1
-  dicePoint: 4
+  dicePoint: 2
   bonusAttackRoll: 0
   bonusDamageRollMultiple: 0
   buffDebuffData: {fileID: 0}
   buffDebuffAmount: 0
   buffDebuffRound: 0
-  cardEffect: {fileID: 0}
+  cardEffect: {fileID: -3784619964089023341, guid: 7de4840752dc0d746bb0f2e4a10c2535, type: 3}
   isLimitUsePerTurn: 0
-  maxUsePerTurn: 3
+  maxUsePerTurn: 1

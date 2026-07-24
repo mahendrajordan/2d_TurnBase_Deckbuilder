@@ -226,4 +226,6 @@ public class DeckBuilderMaster : MonoBehaviour
 
         CurrentCardSelect.ActionCard(mainBody);
     }
+
+    public List<Card> GetCardOnHand()=> cardOnHandkList;
 }

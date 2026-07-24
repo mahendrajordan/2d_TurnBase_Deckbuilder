@@ -33,7 +33,7 @@ public class Card : MonoBehaviour
     int handIndex;
     int selectIndex = 0; // 0 : sedang unSelect; 1 : sedang select
 
-    CardSpecialEffect cardSpecialEffect;
+    public CardSpecialEffect cardSpecialEffect {get; private set;}
 
 #region Setup
     public void Setup(CardData _cardData, MainBody _mainBody, Transform handTransform, Transform trashTransform, Transform offTransform)
@@ -122,12 +122,12 @@ public class Card : MonoBehaviour
 
     void GetSelectType(bool isSelect)
     {
-        if(cardType == CardType.Damage || cardType == CardType.DamageAndBuff ||cardType == CardType.DamageAndDebuff ||cardType == CardType.Debuff)
+        if(cardType == CardType.Damage || cardType == CardType.DamageAndBuff ||cardType == CardType.DamageAndDebuff ||cardType == CardType.Debuff || cardType == CardType.DamageAndSkill )
         {
             battleMaster.ActiveSelectAllEnemy(isSelect);
         }
 
-        if(cardType == CardType.Buff || cardType == CardType.skill)
+        if(cardType == CardType.Buff || cardType == CardType.Skill)
         {
             battleMaster.ActiveSelectPlayer(isSelect);
         }
@@ -162,7 +162,7 @@ public class Card : MonoBehaviour
 #region ActionCard
     public void ActionCard(MainBody target)
     {
-        if(cardType == CardType.Damage || cardType == CardType.DamageAndBuff ||cardType == CardType.DamageAndDebuff)
+        if(cardType == CardType.Damage || cardType == CardType.DamageAndBuff ||cardType == CardType.DamageAndDebuff || cardType == CardType.DamageAndSkill)
         {
             StartCoroutine(Attack(target));
         }
@@ -175,7 +175,7 @@ public class Card : MonoBehaviour
             MainBody newTarget = mainBody;
             GiveBuffDebuff(newTarget);
         }
-        if(cardType == CardType.skill)
+        if(cardType == CardType.Skill ||cardType == CardType.DamageAndSkill)
         {
             ActiveSpecialEffect();
         }
@@ -238,9 +238,11 @@ public class Card : MonoBehaviour
 #region Special Effect
     void SetupSpecialEffec()
     {
+        if(cardSpecialEffect != null) Destroy(cardSpecialEffect.gameObject);
+
         if(cardData.cardEffect == null) return;
         CardSpecialEffect newCardSpecialEffect = Instantiate(cardData.cardEffect, this.transform);
-        newCardSpecialEffect.Setup(deckBuilderMaster);
+        newCardSpecialEffect.Setup(deckBuilderMaster, this);
         cardSpecialEffect = newCardSpecialEffect;
     }
 
@@ -252,4 +254,9 @@ public class Card : MonoBehaviour
 
     public int GetId() => id;
     public int GetHandIndex() => handIndex;
+    public CardData GetCardData() => cardData;
+
+    public int AttackCount {get{return attackCount;} set{attackCount = value;}}
+    public int DicePoint {get{return dicePoint;} set{dicePoint = value;}}
+    public int DiceAmount {get{return diceAmount;} set{diceAmount = value;}}
 }
