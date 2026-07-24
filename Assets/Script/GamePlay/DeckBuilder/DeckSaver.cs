@@ -22,9 +22,9 @@ public class DeckSaver : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    public void ResetToBaseDeck()
+    public void SetBaseDeck(List<CardData> newCardDataList)
     {
-        cardDataList = cardDataBase.ToList();
+        cardDataList = newCardDataList.ToList();
     }
 
     public List<CardData> CardDataList {get{return cardDataList;} set{cardDataList = value;}}
