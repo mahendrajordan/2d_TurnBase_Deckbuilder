@@ -33,6 +33,8 @@ public class Card : MonoBehaviour
     int handIndex;
     int selectIndex = 0; // 0 : sedang unSelect; 1 : sedang select
 
+    CardSpecialEffect cardSpecialEffect;
+
 #region Setup
     public void Setup(CardData _cardData, MainBody _mainBody, Transform handTransform, Transform trashTransform, Transform offTransform)
     {
@@ -69,6 +71,8 @@ public class Card : MonoBehaviour
     {        
         deckBuilderMaster = _deckBuilderMaster;
         battleMaster = _battleMaster;
+
+        SetupSpecialEffec();
     }
 
     public void SetCardHandIndex(int n)
@@ -171,6 +175,10 @@ public class Card : MonoBehaviour
             MainBody newTarget = mainBody;
             GiveBuffDebuff(newTarget);
         }
+        if(cardType == CardType.skill)
+        {
+            ActiveSpecialEffect();
+        }
         
         deckBuilderMaster.SetCurrentCardSelect(null);
         if(mainBody.GetComponent<PlayerBody>())deckBuilderMaster.UseThisChard(cardData.cost);
@@ -226,6 +234,21 @@ public class Card : MonoBehaviour
             target.buffDebuffHandler.TakeEffectUnStackAble(cardData.buffDebuffData, cardData.buffDebuffRound);
     }
 #endregion
+
+#region Special Effect
+    void SetupSpecialEffec()
+    {
+        if(cardData.cardEffect == null) return;
+        CardSpecialEffect newCardSpecialEffect = Instantiate(cardData.cardEffect, this.transform);
+        newCardSpecialEffect.Setup(deckBuilderMaster);
+        cardSpecialEffect = newCardSpecialEffect;
+    }
+
+    void ActiveSpecialEffect()
+    {
+        cardSpecialEffect.ActiveEffect();
+    }
+#endregion 
 
     public int GetId() => id;
     public int GetHandIndex() => handIndex;

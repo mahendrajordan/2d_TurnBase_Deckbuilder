@@ -621,7 +621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2479903586229551477, guid: f5f7de6c78331b14ab3e581192274b45, type: 3}
       propertyPath: rewardCardData.Array.size
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2479903586229551477, guid: f5f7de6c78331b14ab3e581192274b45, type: 3}
       propertyPath: 'rewardCardData.Array.data[0]'

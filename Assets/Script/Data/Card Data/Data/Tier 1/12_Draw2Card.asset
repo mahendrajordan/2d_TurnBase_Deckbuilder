@@ -10,21 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dc3955a83bfcf44d93b41dd190191e0, type: 3}
-  m_Name: 04_Double Slash
+  m_Name: 12_Draw2Card
   m_EditorClassIdentifier: 
-  id: 4
-  name: Double Slash
-  cost: 1
-  description: "Damage 2d4 + \n{dmg} (x2)"
-  cardType: 0
-  attackCount: 2
-  diceAmount: 2
-  dicePoint: 4
+  id: 12
+  name: Draw Card
+  cost: 0
+  description: 'Draw 2 Card
+
+    (max use 3 perTurn)'
+  cardType: 5
+  attackCount: 1
+  diceAmount: 1
+  dicePoint: 2
   bonusAttackRoll: 0
-  bonusDamageRollMultiple: 1
+  bonusDamageRollMultiple: 0
   buffDebuffData: {fileID: 0}
   buffDebuffAmount: 0
   buffDebuffRound: 0
-  cardEffect: {fileID: 0}
-  isLimitUsePerTurn: 0
+  cardEffect: {fileID: 4777113843239465923, guid: 1854646344e2e9040b3467c00dad3d79, type: 3}
+  isLimitUsePerTurn: 1
   maxUsePerTurn: 3

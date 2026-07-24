@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dc3955a83bfcf44d93b41dd190191e0, type: 3}
-  m_Name: 04_Double Slash
+  m_Name: 12_ResetCard
   m_EditorClassIdentifier: 
-  id: 4
-  name: Double Slash
-  cost: 1
-  description: "Damage 2d4 + \n{dmg} (x2)"
-  cardType: 0
-  attackCount: 2
-  diceAmount: 2
-  dicePoint: 4
+  id: 12
+  name: Reset Card
+  cost: 0
+  description: "Reset All Card \non Hand\n(max use 1 perTurn)"
+  cardType: 5
+  attackCount: 1
+  diceAmount: 1
+  dicePoint: 2
   bonusAttackRoll: 0
-  bonusDamageRollMultiple: 1
+  bonusDamageRollMultiple: 0
   buffDebuffData: {fileID: 0}
   buffDebuffAmount: 0
   buffDebuffRound: 0
-  cardEffect: {fileID: 0}
-  isLimitUsePerTurn: 0
-  maxUsePerTurn: 3
+  cardEffect: {fileID: 6532977940047928817, guid: 430146064cede6342aced07617795b08, type: 3}
+  isLimitUsePerTurn: 1
+  maxUsePerTurn: 1

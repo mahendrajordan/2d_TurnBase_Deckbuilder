@@ -40,6 +40,21 @@ public class CardDataEditor : Editor
             data.buffDebuffRound = EditorGUILayout.IntField("Buff Debuff Round", data.buffDebuffRound);
         }
 
+        if(data.cardType == CardType.skill)
+        {
+            EditorGUILayout.Space(25);
+            EditorGUILayout.LabelField("Card Effect", EditorStyles.boldLabel);
+            data.cardEffect = (CardSpecialEffect) EditorGUILayout.ObjectField("Card Effect", data.cardEffect, typeof(CardSpecialEffect));
+        }
+
+        EditorGUILayout.Space(25);
+        EditorGUILayout.LabelField("Limit Use", EditorStyles.boldLabel);
+        data.isLimitUsePerTurn = EditorGUILayout.Toggle("Is Have Limit Use Per Turn?", data.isLimitUsePerTurn);
+        if(data.isLimitUsePerTurn)
+        {
+            data.maxUsePerTurn = EditorGUILayout.IntField("Limit Use PerTurn" , data.maxUsePerTurn);
+        }
+
         // save perubahan
         if (GUI.changed)
         {

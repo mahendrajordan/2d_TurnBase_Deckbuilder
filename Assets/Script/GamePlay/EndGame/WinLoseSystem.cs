@@ -69,6 +69,14 @@ public class WinLoseSystem : MonoBehaviour
 #region Showh Panel
     public void ShowWinPanel()
     {
+        StartCoroutine(ShowWinPanelCorotine());
+    }
+
+    IEnumerator ShowWinPanelCorotine()
+    {
+
+        yield return new WaitForSeconds(1f);
+
         panel.SetActive(true);
         winPanel.SetActive(true);
         losePanel.SetActive(false);
@@ -82,6 +90,13 @@ public class WinLoseSystem : MonoBehaviour
 
     public void ShowLosePanel()
     {
+        StartCoroutine(ShowLosePanelCorotine());
+    }
+
+    IEnumerator ShowLosePanelCorotine()
+    {
+        yield return new WaitForSeconds(1f);
+
         panel.SetActive(true);
         winPanel.SetActive(false);
         losePanel.SetActive(true);
@@ -90,6 +105,13 @@ public class WinLoseSystem : MonoBehaviour
 
     public void ShowFinishPanel()
     {
+        StartCoroutine(ShowFinishPanelCorotine());
+    }
+
+    IEnumerator ShowFinishPanelCorotine()
+    {
+        yield return new WaitForSeconds(1);
+
         panel.SetActive(true);
         winPanel.SetActive(false);
         losePanel.SetActive(false);

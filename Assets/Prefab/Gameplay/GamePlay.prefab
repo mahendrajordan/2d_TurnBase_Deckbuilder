@@ -691,8 +691,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 123.64972}
-  m_SizeDelta: {x: 1105.7958, y: 247.29938}
+  m_AnchoredPosition: {x: 0.000045776, y: 123.64972}
+  m_SizeDelta: {x: 1558, y: 247.2994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5203477807566779796
 MonoBehaviour:
@@ -3225,6 +3225,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6feea39af51e6e547b5156edd968391c, type: 2}
   - {fileID: 11400000, guid: b2a1229d1fc1f464bbac9afdf8270017, type: 2}
   - {fileID: 11400000, guid: bfe0711d7f8c40f43995e2e61419863e, type: 2}
+  - {fileID: 11400000, guid: 3c1b89f0bfeab194184188ef558afcce, type: 2}
+  - {fileID: 11400000, guid: 8e0f15ed9f5a44e489e0b030c4b71adf, type: 2}
   cardInterface: {fileID: 228887635029205723, guid: 579d34b52c494d2448043c83db477958, type: 3}
   moveParent: {fileID: 1412551586636124235}
   panel: {fileID: 2671694774810686743}

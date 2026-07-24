@@ -19,4 +19,9 @@ public class CardData : ScriptableObject
     public BuffDebuffData buffDebuffData;
     public int buffDebuffAmount;
     public int buffDebuffRound;
+
+    public CardSpecialEffect cardEffect;
+
+    public bool isLimitUsePerTurn = false;
+    public int maxUsePerTurn = 3;
 }

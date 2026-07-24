@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Unity.Mathematics;
+using System.Linq;
 using UnityEngine;
 using System.Collections;
-using UnityEngine.WSA;
 using UnityEngine.UI;
 using TMPro;
 
@@ -31,6 +30,7 @@ public class DeckBuilderMaster : MonoBehaviour
 
     List<Card> cardOnHandkList = new List<Card>();
     List<Card> cardOnTrashkList = new List<Card>();
+    List<int> cardDataIdLimitUseList = new List<int>();
 
     Card CurrentCardSelect;
 
@@ -56,16 +56,24 @@ public class DeckBuilderMaster : MonoBehaviour
 #endregion
 
 #region drawCard
-    public void DrawCardOnHand(int cardAmount = 5)
+    public void DrawCardOnHand(int cardAmount = 5, bool isResetUseCard = true)
     {
         int rand = 0;
+        bool canUseThisCard = true;
+        CardData cardData = null;
+
         for(int i = 0; i<cardAmount; i++)
         {
             do
             {
                 rand = UnityEngine.Random.Range(0, cardDatas.Length);
+                canUseThisCard = CanUseThisCard(cardDatas[rand]);
                 
-            }while(TotalThisCardOnHand(rand) >= limitSameCard);
+            }while(TotalThisCardOnHand(rand) >= limitSameCard || !canUseThisCard);
+
+            //add limit use per turn  
+            if(cardDatas[rand].isLimitUsePerTurn)
+                AddLimitCardList(cardDatas[rand]);
 
             //Card card = Instantiate(cardPrefab,cardDeckParent.transform.position,quaternion.identity ,cardDeckParent);            
             Card card = poolingMaster.GetPoolObject(cardPrefab.gameObject).GetComponent<Card>();
@@ -80,7 +88,7 @@ public class DeckBuilderMaster : MonoBehaviour
             card.SetCardHandIndex(i);
             StartCoroutine(MoveCardTo(card.transform, cardHandParent, i));
         }
-        ResetUseCard();
+        if(isResetUseCard) ResetUseCard();
     }
 
     //melimit kartu yg sama di tangan maksimal 3
@@ -143,7 +151,24 @@ public class DeckBuilderMaster : MonoBehaviour
         {
             poolingMaster.ReturnPoolObject(card.gameObject);
         }
-        cardOnHandkList.Clear();
+        cardOnTrashkList.Clear();
+    }
+#endregion
+
+#region Limit Card DrawCheck
+    void AddLimitCardList(CardData cardData)
+    {
+        cardDataIdLimitUseList.Add(cardData.id);
+    }
+
+    bool CanUseThisCard(CardData cardData)
+    {
+        if(!cardData.isLimitUsePerTurn) return true;
+
+        int amount = cardDataIdLimitUseList.Count(x=> x == cardData.id); 
+        if(amount >= cardData.maxUsePerTurn) return false;
+
+        return true;
     }
 #endregion
 
@@ -184,6 +209,7 @@ public class DeckBuilderMaster : MonoBehaviour
     public void EndTurn()
     {
         RemoveAllCardOnHand();
+        cardDataIdLimitUseList.Clear();
         battleMaster.GetTurnBaseSystem().PlayNextTurn();
     }
 #endregion
@@ -197,6 +223,7 @@ public class DeckBuilderMaster : MonoBehaviour
         StartCoroutine(MoveCardTo(CurrentCardSelect.transform, cardTrashParent, 0, 1, 0));
         cardOnHandkList.Remove(CurrentCardSelect);
         cardOnTrashkList.Add(CurrentCardSelect);
+
         CurrentCardSelect.ActionCard(mainBody);
     }
 }
