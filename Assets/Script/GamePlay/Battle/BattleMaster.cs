@@ -17,6 +17,7 @@ public class BattleMaster : MonoBehaviour
 
     Vector2 mouseVector;
     MainBody mainTarget;
+    MainBody mainCharacterDetail;
 
     BuffDebuffIcon CurrentBuffDebuffIconSelect;
 
@@ -81,30 +82,62 @@ public class BattleMaster : MonoBehaviour
         {
             MainBodyCheck(hit);
             BuffDebuffIconCheck(hit);
+            CharacterDetailCheck(hit);
         }
         else
         {
+            mainTarget = null;
             HideBuffdebuffIcon();
+            HideCharacterDetail();
         }
     }
 
+    //Card Target Select
     void MainBodyCheck(RaycastHit2D hit)
     {
         MainBody mainBody = hit.transform.GetComponent<MainBody>();
         if(mainBody == null)
-        {
+        {            
             mainTarget = null;
         }
-        else if(mainBody.isCanSelect && mainTarget != mainBody)
+        else if(mainBody.isCanSelect && mainCharacterDetail != mainBody)
         {
             mainTarget = mainBody;
         }
     }
+    //
 
+    //Character Detail
+    void CharacterDetailCheck(RaycastHit2D hit)
+    {
+        MainBody mainBody = hit.transform.GetComponent<MainBody>();
+        if(mainBody == null)
+        {            
+            HideCharacterDetail();
+        }
+        else if(mainBody && mainCharacterDetail != mainBody)
+        {
+            mainCharacterDetail = mainBody;
+            mainCharacterDetail.ShowCharacterDetail(true);
+        }
+    }
+
+    void HideCharacterDetail()
+    {
+        mainCharacterDetail?.ShowCharacterDetail(false);
+        mainCharacterDetail = null;
+    }
+    //
+
+    //buff debuff detail
     void BuffDebuffIconCheck(RaycastHit2D hit)
     {
         BuffDebuffIcon buffDebuffIcon = hit.transform.GetComponent<BuffDebuffIcon>();
-        if(buffDebuffIcon)
+        if(buffDebuffIcon == null)
+        {
+            HideBuffdebuffIcon();
+        }
+        else if(buffDebuffIcon && CurrentBuffDebuffIconSelect != buffDebuffIcon)
         {
             CurrentBuffDebuffIconSelect = buffDebuffIcon;
             CurrentBuffDebuffIconSelect.ShowDescriptionPanel();
@@ -117,6 +150,7 @@ public class BattleMaster : MonoBehaviour
         CurrentBuffDebuffIconSelect.HideDescriptionPanel();
         CurrentBuffDebuffIconSelect = null;
     }
+    //
 
     void SelectTarget()
     {

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyBody : MainBody
 {
+    [Header("Enemy Brain")]
     [SerializeField] EnemyBrain enemyBrain;
 
     protected override void Setup()

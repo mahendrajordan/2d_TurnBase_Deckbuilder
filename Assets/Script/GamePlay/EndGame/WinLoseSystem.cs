@@ -107,6 +107,7 @@ public class WinLoseSystem : MonoBehaviour
 
             CardInterface  newCard = poolingMaster.GetPoolObject(cardInterface.gameObject).GetComponent<CardInterface>();
             newCard.transform.SetParent(rewardDeckParent);
+            newCard.transform.localScale = Vector2.one;
 
             newCard.Setup(cardData,()=> MoveRewardCardToMainDeck(newCard), ()=> MoveRewardCardBackToRewardDeck(newCard) );
             newCard.ActiveBonusCardIcon();
@@ -162,6 +163,7 @@ public class WinLoseSystem : MonoBehaviour
         {
             CardInterface  newCard = poolingMaster.GetPoolObject(cardInterface.gameObject).GetComponent<CardInterface>();
             newCard.transform.SetParent(mainDeckParent);
+            newCard.transform.localScale = Vector2.one;
             
             newCard.Setup(cardData,()=> MoveMainCardToTrashDeck(newCard), ()=> MoveMainCardToMainDeck(newCard) );
         }

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class MainBody : MonoBehaviour
@@ -29,6 +30,13 @@ public class MainBody : MonoBehaviour
     protected int characterDamagePerDiceBonus;
     protected int characterDamagePerDiceTake;
 
+    [Header("Character Detail Ui")]
+    [SerializeField] GameObject characterDetailPanel;
+    [SerializeField] TextMeshProUGUI characterNameTxt;
+    [SerializeField] TextMeshProUGUI characterAttackRollTxt;
+    [SerializeField] TextMeshProUGUI characterDamageRollTxt;
+    [SerializeField] TextMeshProUGUI characterArmorClassTxt;
+
     void Start()
     {
         Setup();
@@ -51,6 +59,8 @@ public class MainBody : MonoBehaviour
         characterAttackRollBonus = 0;
         characterDamageRollBonus = 0;
         characterArmorClassBonus = 0;
+
+        UpdateDetailCharacter();
     }
 #endregion    
 
@@ -72,6 +82,19 @@ public class MainBody : MonoBehaviour
     public int CharacterDamagePerDiceBonus { get{ return characterDamagePerDiceBonus;} set{characterDamagePerDiceBonus = value;} }
     public int CharacterDamagePerDiceTake { get{ return characterDamagePerDiceTake;} set{characterDamagePerDiceTake = value;} }
 #endregion
+
+    public void UpdateDetailCharacter()
+    {
+        characterNameTxt.text = characterName;
+        characterAttackRollTxt.text = $"{characterBaseAttackRoll + characterAttackRollBonus}";
+        characterDamageRollTxt.text = $"{characterBaseDamageRoll + characterDamageRollBonus}";
+        characterArmorClassTxt.text = $"{characterBaseArmorClass + characterArmorClassBonus}";
+    }
+
+    public void ShowCharacterDetail(bool isShow)
+    {
+        characterDetailPanel.SetActive(isShow);
+    }
 
     
     public BattleMaster GetBattleMaster() => battleMaster;

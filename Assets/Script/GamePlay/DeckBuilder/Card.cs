@@ -94,7 +94,7 @@ public class Card : MonoBehaviour
         deckBuilderMaster.UnSelectAllCard();
 
         Vector2 offset = this.transform.position;
-        offset.y += 100f;
+        offset.y += 50f;
         StartCoroutine(SetPosition(offset, 1.2f, baseOffParent));
         
         deckBuilderMaster.SetCurrentCardSelect(this);

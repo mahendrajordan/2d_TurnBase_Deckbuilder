@@ -137,7 +137,8 @@ public class BuffDebuffHandler : MonoBehaviour
         mainBody.CharacterArmorClassBonus += isAddEffect ? (buffDebuffData.armorClassBonus * amount) : (-buffDebuffData.armorClassBonus * amount);
         mainBody.CharacterDamagePerDiceBonus += isAddEffect ? (buffDebuffData.damagePerDiceBonus * amount) : (-buffDebuffData.damagePerDiceBonus * amount);
         mainBody.CharacterDamagePerDiceTake += isAddEffect ? (buffDebuffData.damagePerDiceTake * amount) : (-buffDebuffData.damagePerDiceTake * amount);
-    
+
+        mainBody.UpdateDetailCharacter();
     }
 #endregion
 
