@@ -150,7 +150,7 @@ public class BuffDebuffHandler : MonoBehaviour
         int dotAmount = effectTotalAmount[buffDebuffData];
 
         int minDmg = diceAmount * dotAmount;
-        int maxDmg = dicePoint * dotAmount;
+        int maxDmg = minDmg * dicePoint * dotAmount;
         int totalDmg = Random.Range(minDmg, maxDmg + 1);
         if(totalDmg==0) return;
         healtHandler.TakeDotDamage(totalDmg);

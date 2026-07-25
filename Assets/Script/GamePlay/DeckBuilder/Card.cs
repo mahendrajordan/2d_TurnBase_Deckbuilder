@@ -209,7 +209,7 @@ public class Card : MonoBehaviour
     int GetDmg()
     {
         int minDmg = diceAmount;
-        int maxDmg = diceAmount * (mainBody.CharacterDamagePerDiceBonus + dicePoint);
+        int maxDmg = diceAmount * (mainBody.CharacterDamagePerDiceBonus + dicePoint); 
         int dmg = Random.Range(minDmg, maxDmg + 1);
         dmg += (mainBody.characterBaseDamageRoll + mainBody.CharacterDamageRollBonus) * cardData.bonusDamageRollMultiple;
 

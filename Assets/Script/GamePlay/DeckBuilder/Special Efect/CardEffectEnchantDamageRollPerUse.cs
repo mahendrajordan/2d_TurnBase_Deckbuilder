@@ -20,7 +20,6 @@ public class CardEffectEnchantDamageRollPerUse : CardSpecialEffect
         Debug.Log($"cardList {cardList.Count}");
         foreach(Card card in cardList)
         {
-            Debug.Log($"card {card.GetCardData().name} is {card.GetCardData() == currentCard.GetCardData()}");
             if(card.GetCardData() == currentCard.GetCardData())
             {
                 card.cardSpecialEffect.GetComponent<CardEffectEnchantDamageRollPerUse>().AddStack();

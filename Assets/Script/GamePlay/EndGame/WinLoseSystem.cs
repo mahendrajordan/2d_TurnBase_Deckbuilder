@@ -193,7 +193,8 @@ public class WinLoseSystem : MonoBehaviour
 
     void MoveMainCardToTrashDeck(CardInterface card)
     {
-        if(cardOnDeck <10) return;
+        //if(cardOnDeck <10) return;
+        if(cardOnDeck <3) return;
         StartCoroutine(MoveCard(card.transform, trashDeckParent));
         cardDataList.Remove(card.GetCardData());
         cardOnDeck--;
