@@ -9,6 +9,7 @@ public class WinLoseSystem : MonoBehaviour
 {
     PoolingMaster poolingMaster;
 
+    [SerializeField] int maxCardRewardShow = 2;
     [SerializeField] CardData[] rewardCardData;
     List<CardData> rewardCardDataList = new List<CardData>();
     List<CardData> cardDataList = new List<CardData>();
@@ -16,7 +17,6 @@ public class WinLoseSystem : MonoBehaviour
     [SerializeField] Transform moveParent;
     [SerializeField] GameObject panel;
     int cardOnDeck;
-    int cardOnReward;
     int currentCardOnReward;
 
     [Header("Win")]
@@ -44,8 +44,7 @@ public class WinLoseSystem : MonoBehaviour
     {
         cardDataList = DeckSaver.ins.CardDataList.ToList();
         cardOnDeck = cardDataList.Count;
-        cardOnReward = rewardCardData.Length;
-        currentCardOnReward = cardOnReward;
+        currentCardOnReward = maxCardRewardShow;
 
         poolingMaster = PoolingMaster.ins;
 
@@ -138,8 +137,8 @@ public class WinLoseSystem : MonoBehaviour
 
     void MoveRewardCardToMainDeck(CardInterface card)
     {
-        if(currentCardOnReward != cardOnReward) return;
-        if(cardOnDeck >= 10) return;
+        if(currentCardOnReward < maxCardRewardShow) { card.ChangeClickIndex(0); return;}
+        if(cardOnDeck >= 10) {card.ChangeClickIndex(0); return; }
 
         StartCoroutine(MoveCard(card.transform, mainDeckParent));
         cardDataList.Add(card.GetCardData());
@@ -171,7 +170,8 @@ public class WinLoseSystem : MonoBehaviour
         else
         {
             int rand = Random.Range(0, rewardCardDataList.Count);
-            cardData = rewardCardDataList[rand];
+            cardData = rewardCardDataList[rand];            
+            rewardCardDataList.Remove(cardData);
         }
 
         return cardData;
@@ -193,15 +193,15 @@ public class WinLoseSystem : MonoBehaviour
 
     void MoveMainCardToTrashDeck(CardInterface card)
     {
-        //if(cardOnDeck <10) return;
-        if(cardOnDeck <3) return;
+        //if(cardOnDeck <10) { card.ChangeClickIndex(0); return;}
+        if(cardOnDeck <3) { card.ChangeClickIndex(0); return;}
         StartCoroutine(MoveCard(card.transform, trashDeckParent));
         cardDataList.Remove(card.GetCardData());
         cardOnDeck--;
     }
     void MoveMainCardToMainDeck(CardInterface card)
     {
-        if(cardOnDeck == 10) return;
+        if(cardOnDeck == 10) { card.ChangeClickIndex(1); return;}
         StartCoroutine(MoveCard(card.transform, mainDeckParent));
         cardDataList.Remove(card.GetCardData());
         cardOnDeck++;

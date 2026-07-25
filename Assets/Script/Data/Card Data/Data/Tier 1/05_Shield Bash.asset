@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 5
   name: Shield Bash
   cost: 1
-  description: 'Damage 1d6 + {dmg} &
+  description: 'Damage 2d4 + {dmg} &
 
     Enemy Attack Roll - 1
 
@@ -25,6 +25,10 @@ MonoBehaviour:
   diceAmount: 2
   dicePoint: 4
   bonusAttackRoll: 0
+  bonusDamageRollMultiple: 1
   buffDebuffData: {fileID: 11400000, guid: ad4c26e81b37d3842892f3446a347508, type: 2}
   buffDebuffAmount: 1
   buffDebuffRound: 1
+  cardEffect: {fileID: 0}
+  isLimitUsePerTurn: 0
+  maxUsePerTurn: 3

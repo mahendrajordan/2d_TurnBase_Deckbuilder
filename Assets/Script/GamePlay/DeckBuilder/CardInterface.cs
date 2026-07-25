@@ -59,10 +59,19 @@ public class CardInterface : MonoBehaviour
 
     void PlayAction()
     {
-        if(clickIndex == 0) actionOnClick.Invoke();
-        else if(clickIndex == 1) unActionOnClick.Invoke();
-        clickIndex = clickIndex == 0 ? 1 : 0;
+        if(clickIndex == 0) 
+        {
+            clickIndex = clickIndex == 0 ? 1 : 0;
+            actionOnClick.Invoke();
+        }
+        else if(clickIndex == 1) 
+        {            
+            clickIndex = clickIndex == 0 ? 1 : 0;
+            unActionOnClick.Invoke();
+        }
     }
+
+    public void ChangeClickIndex(int n)=>clickIndex=n;
 
     public CardData GetCardData()=> cardData;
 }
