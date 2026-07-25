@@ -15,12 +15,20 @@ MonoBehaviour:
   id: 8
   name: Rage
   cost: 1
-  description: "Damage Roll + 2 \nArmor Class - 2\nfor 2 turn"
+  description: 'Damage Roll + 3
+
+    Armor Class - 3
+
+    for 2 turn'
   cardType: 4
   attackCount: 1
   diceAmount: 0
   dicePoint: 0
   bonusAttackRoll: 0
+  bonusDamageRollMultiple: 1
   buffDebuffData: {fileID: 11400000, guid: 3a383e5714869e7408a3631aec34fc36, type: 2}
   buffDebuffAmount: 1
   buffDebuffRound: 2
+  cardEffect: {fileID: 0}
+  isLimitUsePerTurn: 0
+  maxUsePerTurn: 3

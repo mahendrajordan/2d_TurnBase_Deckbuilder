@@ -26,6 +26,7 @@ public class BuffDebuffHandler : MonoBehaviour
 #region EffectCheck
     public void CheckAllEffect()
     {
+        //stack effect
         foreach(KeyValuePair<BuffDebuffData, List<EffectData>> item in effectDatas)
         {
             BuffDebuffData buffDebuffData = item.Key;
@@ -58,6 +59,28 @@ public class BuffDebuffHandler : MonoBehaviour
                 }
             }
             effectDataTemp.Clear();
+        }
+
+        //unStack effect
+        foreach(KeyValuePair<BuffDebuffData, EffectData> item in effectDataUnStackAbles)
+        {
+            BuffDebuffData buffDebuffData = item.Key;
+            EffectData effectData = item.Value;           
+
+            //dot
+            TakeDotDamage(buffDebuffData);
+
+            //check roundlife
+            effectData.roundLife--;
+            if(effectData.roundLife <=0)
+            {
+                ChangeStats(buffDebuffData, effectData.effectAmount, false);
+                AddEffectTotalAmount(buffDebuffData, -effectData.effectAmount, buffDebuffData.stackAble);
+                effectData = null;
+
+                //check untuk merubah status berdasarkan total buff nya
+                IconCheck(buffDebuffData);
+            }
         }
     }
 #endregion

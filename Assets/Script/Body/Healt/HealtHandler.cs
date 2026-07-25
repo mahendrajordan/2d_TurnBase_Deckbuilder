@@ -34,8 +34,8 @@ public class HealtHandler : MonoBehaviour
     {
         int totalDmg = dmg + (diceAmount * mainBody.CharacterDamagePerDiceTake);
 
-        SpawnDamage(dmg.ToString(), true);
-        currentHealt -= dmg;
+        SpawnDamage(totalDmg.ToString(), true);
+        currentHealt -= totalDmg;
 
         if(currentHealt <= 0)
         {

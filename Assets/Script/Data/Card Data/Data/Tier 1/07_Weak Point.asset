@@ -15,14 +15,18 @@ MonoBehaviour:
   id: 7
   name: Weak Point
   cost: 1
-  description: 'Damage 1d4 + {dmg} &
+  description: 'Damage 3d2 + {dmg} &
 
     Enemy weak for 2 turn'
   cardType: 2
   attackCount: 1
-  diceAmount: 1
-  dicePoint: 4
+  diceAmount: 3
+  dicePoint: 2
   bonusAttackRoll: 0
+  bonusDamageRollMultiple: 1
   buffDebuffData: {fileID: 11400000, guid: 970f4570c3fb8804391cec541cb93fc8, type: 2}
   buffDebuffAmount: 1
   buffDebuffRound: 2
+  cardEffect: {fileID: 0}
+  isLimitUsePerTurn: 0
+  maxUsePerTurn: 3

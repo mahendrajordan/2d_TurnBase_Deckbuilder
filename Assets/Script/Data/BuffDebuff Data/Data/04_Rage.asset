@@ -21,8 +21,8 @@ MonoBehaviour:
   stackAble: 0
   buffDebuffType: 0
   attackRollBonus: 0
-  damageRollBonus: 2
-  armorClassBonus: -2
+  damageRollBonus: 3
+  armorClassBonus: -3
   damagePerDiceBonus: 0
   damagePerDiceTake: 0
   diceAmount: 0
