@@ -162,6 +162,8 @@ public class Card : MonoBehaviour
 #region ActionCard
     public void ActionCard(MainBody target)
     {
+        battleMaster.GetGamePlayHistory().CreateCardInformation(mainBody, cardData);
+        
         if(cardType == CardType.Damage || cardType == CardType.DamageAndBuff ||cardType == CardType.DamageAndDebuff || cardType == CardType.DamageAndSkill)
         {
             StartCoroutine(Attack(target));
@@ -193,7 +195,7 @@ public class Card : MonoBehaviour
     {
         for(int i=0; i< attackCount; i++)
         {
-            if(!target.healtHandler.IsGetHit(GetAttackRoll()) ) continue;
+            if(!target.healtHandler.IsGetHit(GetAttackRoll(),mainBody) ) continue;
 
             target.healtHandler.TakeDamage(GetDmg(),  diceAmount);
             //khusus "CardType.DamageAndDebuff" harus kena target
@@ -232,6 +234,8 @@ public class Card : MonoBehaviour
             target.buffDebuffHandler.TakeEffect(cardData.buffDebuffData, cardData.buffDebuffAmount, cardData.buffDebuffRound);
         else
             target.buffDebuffHandler.TakeEffectUnStackAble(cardData.buffDebuffData, cardData.buffDebuffRound);
+
+        battleMaster.GetGamePlayHistory().CreateTakeEffectInformation(target, cardData.buffDebuffData);
     }
 #endregion
 

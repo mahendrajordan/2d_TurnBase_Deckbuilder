@@ -9,6 +9,7 @@ public class BattleMaster : MonoBehaviour
     MainInputSystem mainInputSystem;
     DeckBuilderMaster deckBuilderMaster;
     WinLoseSystem winLoseSystem;
+    GamePlayHistory gamePlayHistory;
     [SerializeField] TurnBaseSystem turnBaseSystem;
 
     public PlayerBody playerBody;
@@ -41,6 +42,7 @@ public class BattleMaster : MonoBehaviour
         mainInputSystem = new MainInputSystem();
         deckBuilderMaster = FindAnyObjectByType<DeckBuilderMaster>();
         winLoseSystem = FindAnyObjectByType<WinLoseSystem>();
+        gamePlayHistory = FindAnyObjectByType<GamePlayHistory>();
         enemyAmount = enemyBodys.Length;
 
         turnBaseSystem.SetupTurnBaseSystem(playerBody, enemyBodys);
@@ -226,4 +228,5 @@ public class BattleMaster : MonoBehaviour
 #endregion
 
     public TurnBaseSystem GetTurnBaseSystem() =>turnBaseSystem;
+    public GamePlayHistory GetGamePlayHistory()=> gamePlayHistory;
 }

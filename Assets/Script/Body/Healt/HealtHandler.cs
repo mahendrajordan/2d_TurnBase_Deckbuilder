@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class HealtHandler : MonoBehaviour
 {
     MainBody mainBody;
+    GamePlayHistory gamePlayHistory;
 
     [SerializeField] int baseHealt;
     [SerializeField] int currentHealt;
@@ -21,12 +22,15 @@ public class HealtHandler : MonoBehaviour
     [SerializeField] Color damageColor = Color.red;
     [SerializeField] Color healColor = Color.green;
 
+    MainBody whoLastHit = null;
+
     public void Setup(MainBody _mainBody)
     {
         mainBody = _mainBody;
         baseHealt = mainBody.characterBaseHealt;
         currentHealt = baseHealt;
         baseArmorClass = mainBody.characterBaseArmorClass;
+        gamePlayHistory = mainBody.GetBattleMaster().GetGamePlayHistory();
         UpdateUi();
     }
 
@@ -34,6 +38,7 @@ public class HealtHandler : MonoBehaviour
     {
         int totalDmg = dmg + (diceAmount * mainBody.CharacterDamagePerDiceTake);
 
+        gamePlayHistory.CreateDamageInformation(whoLastHit, mainBody, totalDmg);
         SpawnDamage(totalDmg.ToString(), true);
         currentHealt -= totalDmg;
 
@@ -45,14 +50,19 @@ public class HealtHandler : MonoBehaviour
         UpdateUi();
     }
 
-    public bool IsGetHit(int attackRoll)
+    public bool IsGetHit(int attackRoll, MainBody whoHit)
     {
         int totalArmorClass = baseArmorClass + mainBody.CharacterArmorClassBonus;
+
+        whoLastHit = whoHit;
+        gamePlayHistory.CreateHitInformation(whoLastHit, mainBody, attackRoll, totalArmorClass);
+        
         if(attackRoll< totalArmorClass)
         {
             SpawnDamage("miss", true);
             return false;
         }
+
         return true;
     }
 
