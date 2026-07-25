@@ -76,7 +76,6 @@ public class BuffDebuffHandler : MonoBehaviour
             {
                 ChangeStats(buffDebuffData, effectData.effectAmount, false);
                 AddEffectTotalAmount(buffDebuffData, -effectData.effectAmount, buffDebuffData.stackAble);
-                effectData = null;
 
                 //check untuk merubah status berdasarkan total buff nya
                 IconCheck(buffDebuffData);
@@ -119,7 +118,7 @@ public class BuffDebuffHandler : MonoBehaviour
 
         if(effectDataUnStackAbles.ContainsKey(buffDebuffData))
         {            
-            alreadyHaveEffect = effectDataUnStackAbles[buffDebuffData] != null;
+            alreadyHaveEffect = effectTotalAmount[buffDebuffData] != 0;
             effectDataUnStackAbles[buffDebuffData] = effectData;
         }
         else
@@ -139,7 +138,7 @@ public class BuffDebuffHandler : MonoBehaviour
     {
         int totalAmount = effectTotalAmount.ContainsKey(buffDebuffData) ? effectTotalAmount[buffDebuffData] + amount : amount;
         int maxAmount = canStack ? 100 : 1;
-        totalAmount = Mathf.Clamp(totalAmount, 0, maxAmount);
+        totalAmount = Mathf.Clamp(totalAmount, 0, maxAmount);        
         
         if(effectTotalAmount.ContainsKey(buffDebuffData))
         {

@@ -17,7 +17,6 @@ public class CardEffectEnchantDamageRollPerUse : CardSpecialEffect
         base.ActiveEffect();
 
         List<Card> cardList = deckBuilderMaster.GetCardOnHand().ToList();
-        Debug.Log($"cardList {cardList.Count}");
         foreach(Card card in cardList)
         {
             if(card.GetCardData() == currentCard.GetCardData())

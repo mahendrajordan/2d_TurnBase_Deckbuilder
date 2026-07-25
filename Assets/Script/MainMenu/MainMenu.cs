@@ -50,7 +50,7 @@ public class MainMenu : MonoBehaviour
 
             CardData cardData = cardDatas[rand];
             CardInterface cardInterface = Instantiate(cardInterfacePrefab, cardListParent);
-            cardInterface.Setup(cardData,()=> MoveCardToDeck(cardInterface.transform, cardData), ()=> MoveCardToMain(cardInterface.transform, cardData));
+            cardInterface.Setup(cardData,()=> MoveCardToDeck(cardInterface, cardData), ()=> MoveCardToMain(cardInterface, cardData));
             cardInterfaceList.Add(cardInterface);
         }
     }
@@ -62,9 +62,11 @@ public class MainMenu : MonoBehaviour
 
     
 #region Move Card
-    void MoveCardToDeck(Transform obj, CardData cardData)
+    void MoveCardToDeck(CardInterface card, CardData cardData)
     {
-        if(currentCardOnDect>= maxCardOndeck) return;
+        Transform obj = card.transform;
+
+        if(currentCardOnDect>= maxCardOndeck) {card.ChangeClickIndex(0); return;}
 
         StartCoroutine(MoveCard(obj, deckListParent));
         cardOnDeckList.Add(cardData);
@@ -73,8 +75,10 @@ public class MainMenu : MonoBehaviour
         playBtn.gameObject.SetActive(currentCardOnDect>=maxCardOndeck);
     }
 
-    void MoveCardToMain(Transform obj, CardData cardData)
+    void MoveCardToMain(CardInterface card, CardData cardData)
     {
+        Transform obj = card.transform;
+
         StartCoroutine(MoveCard(obj, cardListParent));
         cardOnDeckList.Remove(cardData);
         currentCardOnDect--;
