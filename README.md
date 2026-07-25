@@ -36,6 +36,7 @@ untuk kedepan direncanakan setiap lanjut ke stage berikut nya pemain akan memili
 - ketika select card ada kemungkinan kecil ketika di klik lagi malah menjalan kan action nya, ini sudah aku coba perbaiki di raycast kursor nya tapi belum yakin apakah itu dapat menyelsaikan masalah ini, untuk saat ini belum menemukan masalah ini lagi
 - move card, ketika kartu di select lalu balik ketangan urutan nya berubah, ini karena untuk sekarang kartu hanyak balik ke transform parent nya tapi tidak ke susunan child nya
 - magic missile, efek kartu untuk saat ini hanya berefek ke kartu di tangan saja tidak di kartu di deck. misal pakai 1 kali magic missile harusnya kartu berikut nya memiliki dmg roll 1d5 tapi jika kartu di ambil dari deck balik ke dmg roll awal 1d2
+- efek ubh stats terkadang suka stuck, dimana value nya ke double setelah recovery. bagian ini sudah di perbaiki, tapi mungkin masih ada kemungkinan kecil muncul kembali
 
 # Core Script
 # DeckBuilderMaster.cs
