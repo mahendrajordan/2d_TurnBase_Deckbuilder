@@ -71,6 +71,8 @@ public class BuffDebuffHandler : MonoBehaviour
             TakeDotDamage(buffDebuffData);
 
             //check roundlife
+            if(effectTotalAmount[buffDebuffData] == 0) continue;
+
             effectData.roundLife--;
             if(effectData.roundLife <=0)
             {
@@ -154,6 +156,7 @@ public class BuffDebuffHandler : MonoBehaviour
 #region ChangeStats
     void ChangeStats(BuffDebuffData buffDebuffData, int amount, bool isAddEffect = true)
     {
+        Debug.Log($"change Stat {buffDebuffData.armorClassBonus * amount}" );
         mainBody.CharacterAttckRollBonus += isAddEffect ? (buffDebuffData.attackRollBonus * amount) : (-buffDebuffData.attackRollBonus  * amount);
         mainBody.CharacterDamageRollBonus += isAddEffect ? (buffDebuffData.damageRollBonus  * amount) : (-buffDebuffData.damageRollBonus * amount);
         mainBody.CharacterArmorClassBonus += isAddEffect ? (buffDebuffData.armorClassBonus * amount) : (-buffDebuffData.armorClassBonus * amount);
