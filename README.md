@@ -17,7 +17,7 @@ pemain memiliki deck dengan 5 kartu di tangan, setiap kartu punya cost nya masin
 
 target awal adalah pemain dapat memilih kartu untuk menyerang musuh, jika sudah cost sudah tercapai maka end turn dan gilirian musuh jalan jika musuh sudah selesai jalan, maka masuk round baru dan di mulai dari player lagi.
 jika pemain kalah maka akan balik ke main menu.
-jika pemain menang akan masuk ke stage berikut nya, sebelum masuk player akan memilih satu dari 3 kartu baru.
+jika pemain menang akan masuk ke stage berikut nya, sebelum masuk player akan memilih satu dari 2 kartu baru.
 
 di dalam game terdiri 4 status utama, yaitu :
 healt -> nyawa character
