@@ -25,7 +25,7 @@ attack roll -> akurasi serangan dengan formula 1d20 + attack roll
 damage roll -> damage bonus yg diberikan character
 armor class -> kemampuan memblokir/menghindar serangan 
 
-di game ini akurasi dan damage berdasrkan putaran dadu, dengan aturan 2d6 -> berarti 2 dadu dengan masing2 daru bernilai maksimal 6 dengan output range (2-12)
+di game ini akurasi dan damage berdasrkan putaran dadu, dengan aturan 2d6 -> berarti 2 dadu dengan masing2 dadu bernilai maksimal 6 dengan output range (2-12)
 
 target utama saat ini adalah bagaiman sistem deck bekerja, efek kartu yg bisa di berikan yaitu memberi damage, efek buff dan debuff, dan juga dot.
 
