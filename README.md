@@ -30,7 +30,9 @@ di game ini akurasi dan damage berdasrkan putaran dadu, dengan aturan 2d6 -> ber
 target utama saat ini adalah bagaiman sistem deck bekerja, efek kartu yg bisa di berikan yaitu memberi damage, efek buff dan debuff, dan juga dot.
 
 # What I Would Do With More Time
-untuk kedepan direncanakan setiap lanjut ke stage berikut nya pemain akan memilih bonus stats tambahan, pembuatan jenis efek skill baru seperti yg simple increase die roll setiap 2 turn, atau disable jenis kartu tertentu.
+- untuk kedepan direncanakan setiap lanjut ke stage berikut nya pemain akan memilih bonus stats tambahan, 
+- membuatan jenis efek skill baru seperti yg simple increase die roll setiap 2 turn, atau disable jenis kartu tertentu,
+- sistem class/ character yg bisa memiliki sinergi dengan kartu tertentu, seperti Barbarian dengan trait reckless stance -> ketika menggunakan Rage attack roll +1, wizard dengan trait untraining hand -> kartu selain magic punya pinalty attack roll -1 tapi kartu bertipe magic memiliki bonus attack roll +1 
 
 # Known Issues
 - ketika select card ada kemungkinan kecil ketika di klik lagi malah menjalan kan action nya, ini sudah aku coba perbaiki di raycast kursor nya tapi belum yakin apakah itu dapat menyelsaikan masalah ini, untuk saat ini belum menemukan masalah ini lagi
