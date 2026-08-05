@@ -13,6 +13,7 @@ public class MainBody : MonoBehaviour
     public CharacterData CharacterData;
     public HealtHandler healtHandler;
     public BuffDebuffHandler buffDebuffHandler;
+    public CharacterDescription characterDescription;
 
     [Space]
     [SerializeField] protected GameObject seletObj;
@@ -29,13 +30,6 @@ public class MainBody : MonoBehaviour
     protected int characterArmorClassBonus;
     protected int characterDamagePerDiceBonus;
     protected int characterDamagePerDiceTake;
-
-    [Header("Character Detail Ui")]
-    [SerializeField] GameObject characterDetailPanel;
-    [SerializeField] TextMeshProUGUI characterNameTxt;
-    [SerializeField] TextMeshProUGUI characterAttackRollTxt;
-    [SerializeField] TextMeshProUGUI characterDamageRollTxt;
-    [SerializeField] TextMeshProUGUI characterArmorClassTxt;
 
     void Start()
     {
@@ -60,7 +54,8 @@ public class MainBody : MonoBehaviour
         characterDamageRollBonus = 0;
         characterArmorClassBonus = 0;
 
-        UpdateDetailCharacter();
+        characterDescription.SetMainBody(this);
+        characterDescription.UpdateDetailCharacter();
     }
 #endregion    
 
@@ -83,22 +78,10 @@ public class MainBody : MonoBehaviour
     public int CharacterDamagePerDiceTake { get{ return characterDamagePerDiceTake;} set{characterDamagePerDiceTake = value;} }
 #endregion
 
-    public void UpdateDetailCharacter()
-    {
-        characterNameTxt.text = characterName;
-        characterAttackRollTxt.text = $"{characterBaseAttackRoll + characterAttackRollBonus}";
-        characterDamageRollTxt.text = $"{characterBaseDamageRoll + characterDamageRollBonus}";
-        characterArmorClassTxt.text = $"{characterBaseArmorClass + characterArmorClassBonus}";
-    }
-
-    public void ShowCharacterDetail(bool isShow)
-    {
-        characterDetailPanel.SetActive(isShow);
-    }
-
     
     public BattleMaster GetBattleMaster() => battleMaster;
     public TurnBaseSystem GetTurnBaseSystem() => turnBaseSystem;
     public DeckBuilderMaster GetDeckBuilderMaster() => deckBuilderMaster;
+    public ConditonType GetConditonType() => conditonType;
 
 }

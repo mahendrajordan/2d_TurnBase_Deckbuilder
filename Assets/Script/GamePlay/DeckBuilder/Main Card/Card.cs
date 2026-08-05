@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -35,6 +36,12 @@ public class Card : MonoBehaviour
 
     public CardSpecialEffect cardSpecialEffect {get; private set;}
 
+    List<IdCardAction> idCardActionList = new List<IdCardAction>();
+    CardContextInfo cardContextInfo;
+    CardAttackAction cardAttackAction;
+    CardBuffDebuffAction cardBuffDebuffAction;
+    CardSpecialEffectAction cardSpecialEffectAction;
+
 #region Setup
     public void Setup(CardData _cardData, MainBody _mainBody, Transform handTransform, Transform trashTransform, Transform offTransform)
     {
@@ -65,6 +72,8 @@ public class Card : MonoBehaviour
         btn = GetComponent<Button>();
         btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(()=> SelectCard());
+
+        SetupActionCard();
     }
 
     public void GetMainInfo(DeckBuilderMaster _deckBuilderMaster, BattleMaster _battleMaster)
@@ -160,82 +169,89 @@ public class Card : MonoBehaviour
 #endregion
 
 #region ActionCard
-    public void ActionCard(MainBody target)
+    public void ActionCardNew(MainBody target)
     {
         battleMaster.GetGamePlayHistory().CreateCardInformation(mainBody, cardData);
-        
-        if(cardType == CardType.Damage || cardType == CardType.DamageAndBuff ||cardType == CardType.DamageAndDebuff || cardType == CardType.DamageAndSkill)
-        {
-            StartCoroutine(Attack(target));
-        }
-        if(cardType == CardType.Debuff)
-        {
-            GiveBuffDebuff(target);
-        }
-        if(cardType == CardType.DamageAndBuff || cardType == CardType.Buff)
-        {
-            MainBody newTarget = mainBody;
-            GiveBuffDebuff(newTarget);
-        }
-        if(cardType == CardType.Skill ||cardType == CardType.DamageAndSkill)
-        {
-            ActiveSpecialEffect();
-        }
-        
+
+        cardContextInfo.target = target;
+        StartCoroutine(StartActiomCardCard());
+
         deckBuilderMaster.SetCurrentCardSelect(null);
         if(mainBody.GetComponent<PlayerBody>())deckBuilderMaster.UseThisChard(cardData.cost);
 
         battleMaster.ActiveSelectAllEnemy(false);
         battleMaster.ActiveSelectPlayer(false);
-    }    
-#endregion
+    }
 
-#region Attack
-    IEnumerator Attack(MainBody target)
+    IEnumerator StartActiomCardCard()
     {
-        for(int i=0; i< attackCount; i++)
+        for(int i = 0; i< attackCount; i++)
         {
-            if(!target.healtHandler.IsGetHit(GetAttackRoll(),mainBody) ) continue;
+            //card bertipe dmg harus hit target baru bisa memberi debuff atau skill
+            if(cardType == CardType.Damage || cardType == CardType.DamageAndDebuff || cardType == CardType.DamageAndSkill)
+                if(!cardContextInfo.target.healtHandler.IsGetHit(GetAttackRoll(),mainBody) ) continue;
 
-            target.healtHandler.TakeDamage(GetDmg(),  diceAmount);
-            //khusus "CardType.DamageAndDebuff" harus kena target
-            if(cardType == CardType.DamageAndDebuff)
+            //start action
+            foreach(IdCardAction idCardAction in idCardActionList)
             {
-                GiveBuffDebuff(target);
+                idCardAction.Execute(cardContextInfo);
             }
-
             yield return new WaitForSeconds(.1f);
         }
     }
 
-    int GetDmg()
+    void SetupActionCard()
     {
-        int minDmg = diceAmount;
-        int maxDmg = diceAmount * (mainBody.CharacterDamagePerDiceBonus + dicePoint); 
-        int dmg = Random.Range(minDmg, maxDmg + 1);
-        dmg += (mainBody.characterBaseDamageRoll + mainBody.CharacterDamageRollBonus) * cardData.bonusDamageRollMultiple;
+        idCardActionList.Clear();
+        cardContextInfo = new CardContextInfo();
+        cardContextInfo.card = this;
+        cardContextInfo.cardData = cardData;
+        cardContextInfo.user = mainBody;
+        cardContextInfo.isTargetSelf = false;
 
-        return dmg;
+        cardAttackAction = new CardAttackAction();
+        cardBuffDebuffAction = new CardBuffDebuffAction();
+        cardSpecialEffectAction = new CardSpecialEffectAction();
+
+        switch(cardType)
+        {
+            case CardType.Damage :
+                idCardActionList.Add(cardAttackAction);
+                break;
+            case CardType.DamageAndDebuff :
+                idCardActionList.Add(cardAttackAction);
+                idCardActionList.Add(cardBuffDebuffAction);
+                break;
+            case CardType.DamageAndBuff :
+                cardContextInfo.isTargetSelf = true;
+                idCardActionList.Add(cardAttackAction);
+                idCardActionList.Add(cardBuffDebuffAction);
+                break;
+            case CardType.DamageAndSkill :                
+                idCardActionList.Add(cardAttackAction);
+                idCardActionList.Add(cardSpecialEffectAction);
+                break;
+            case CardType.Buff :
+                idCardActionList.Add(cardBuffDebuffAction);
+                break;
+            case CardType.Debuff :
+                idCardActionList.Add(cardBuffDebuffAction);
+                break;
+            case CardType.Skill :
+                idCardActionList.Add(cardSpecialEffectAction);
+                break;
+        }
+            
     }
+#endregion
+
+#region Attack    
 
     int GetAttackRoll()
     {
         int attackRoll = Random.Range(1, 21);
         attackRoll += mainBody.characterBaseAttackRoll + mainBody.CharacterAttckRollBonus + bonusAttackRoll;
         return attackRoll;
-    }
-#endregion
-
-#region Buff Debuff
-    void GiveBuffDebuff(MainBody target)
-    {
-        bool isStackAble = cardData.buffDebuffData.stackAble;
-        if(isStackAble)
-            target.buffDebuffHandler.TakeEffect(cardData.buffDebuffData, cardData.buffDebuffAmount, cardData.buffDebuffRound);
-        else
-            target.buffDebuffHandler.TakeEffectUnStackAble(cardData.buffDebuffData, cardData.buffDebuffRound);
-
-        battleMaster.GetGamePlayHistory().CreateTakeEffectInformation(target, cardData.buffDebuffData);
     }
 #endregion
 
@@ -249,11 +265,6 @@ public class Card : MonoBehaviour
         newCardSpecialEffect.Setup(deckBuilderMaster, this);
         cardSpecialEffect = newCardSpecialEffect;
     }
-
-    void ActiveSpecialEffect()
-    {
-        cardSpecialEffect.ActiveEffect();
-    }
 #endregion 
 
     public int GetId() => id;
@@ -263,4 +274,6 @@ public class Card : MonoBehaviour
     public int AttackCount {get{return attackCount;} set{attackCount = value;}}
     public int DicePoint {get{return dicePoint;} set{dicePoint = value;}}
     public int DiceAmount {get{return diceAmount;} set{diceAmount = value;}}
+    public int BonusAttackRoll {get{return BonusAttackRoll;} set{BonusAttackRoll = value;}}
+    public BattleMaster BattleMaster {get{return battleMaster;} set{battleMaster = value;}}
 }

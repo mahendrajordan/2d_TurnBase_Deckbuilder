@@ -102,7 +102,7 @@ public class BattleMaster : MonoBehaviour
         {            
             mainTarget = null;
         }
-        else if(mainBody.isCanSelect && mainCharacterDetail != mainBody)
+        else if(mainBody.isCanSelect && mainTarget != mainBody)
         {
             mainTarget = mainBody;
         }
@@ -120,13 +120,13 @@ public class BattleMaster : MonoBehaviour
         else if(mainBody && mainCharacterDetail != mainBody)
         {
             mainCharacterDetail = mainBody;
-            mainCharacterDetail.ShowCharacterDetail(true);
+            mainCharacterDetail.characterDescription.ShowCharacterDetail(true);
         }
     }
 
     void HideCharacterDetail()
     {
-        mainCharacterDetail?.ShowCharacterDetail(false);
+        mainCharacterDetail?.characterDescription.ShowCharacterDetail(false);
         mainCharacterDetail = null;
     }
     //

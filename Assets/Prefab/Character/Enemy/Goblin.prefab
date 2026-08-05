@@ -366,6 +366,7 @@ GameObject:
   - component: {fileID: 3028108945951423380}
   - component: {fileID: 191087871377241683}
   - component: {fileID: 884723964345659525}
+  - component: {fileID: -8178421998035530006}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Untagged
@@ -455,6 +456,7 @@ MonoBehaviour:
   CharacterData: {fileID: 11400000, guid: a4fb9f888ec749144983567b2919d6db, type: 2}
   healtHandler: {fileID: 191087871377241683}
   buffDebuffHandler: {fileID: 884723964345659525}
+  characterDescription: {fileID: -8178421998035530006}
   seletObj: {fileID: 8087800399511397498}
   isCanSelect: 0
   characterDetailPanel: {fileID: 4445160435738605750}
@@ -523,6 +525,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buffDebuffIconPrefab: {fileID: 4584153156885859989, guid: 8148e810fce07da4a80714d599c198ca, type: 3}
   spawnParent: {fileID: 4736895020428199464}
+--- !u!114 &-8178421998035530006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8723568660809209180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5cfbf9174251be47b292e784c603b62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterDetailPanel: {fileID: 4445160435738605750}
+  characterNameTxt: {fileID: 3158960675007973012}
+  characterAttackRollTxt: {fileID: 3947274142064409079}
+  characterDamageRollTxt: {fileID: 7388165276418905887}
+  characterArmorClassTxt: {fileID: 8610613743999984278}
 --- !u!1001 &1889882887288574493
 PrefabInstance:
   m_ObjectHideFlags: 0

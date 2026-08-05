@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 3626251596677908422}
   - component: {fileID: 3586786186437098356}
   - component: {fileID: 5035448736836202175}
+  - component: {fileID: 928418334230485335}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Untagged
@@ -187,6 +188,7 @@ MonoBehaviour:
   CharacterData: {fileID: 11400000, guid: 7deb172aa66403440a5d465f601e9d8b, type: 2}
   healtHandler: {fileID: 3586786186437098356}
   buffDebuffHandler: {fileID: 5035448736836202175}
+  characterDescription: {fileID: 928418334230485335}
   seletObj: {fileID: 5870684446844652102}
   isCanSelect: 0
   characterDetailPanel: {fileID: 3282384999519217824}
@@ -230,6 +232,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buffDebuffIconPrefab: {fileID: 4584153156885859989, guid: 8148e810fce07da4a80714d599c198ca, type: 3}
   spawnParent: {fileID: 5770000719242396974}
+--- !u!114 &928418334230485335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6025278809326727582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5cfbf9174251be47b292e784c603b62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterDetailPanel: {fileID: 3282384999519217824}
+  characterNameTxt: {fileID: 4317790848596006530}
+  characterAttackRollTxt: {fileID: 2808758469751826913}
+  characterDamageRollTxt: {fileID: 8553803772183906057}
+  characterArmorClassTxt: {fileID: 7440568414219743872}
 --- !u!1 &8123722316984517935
 GameObject:
   m_ObjectHideFlags: 0

@@ -66,7 +66,7 @@ public class EnemyBrain : MonoBehaviour
             canPlay = currentEnergy>=0 && cardOnHand >0; 
             if(canPlay)
             {
-                cardLists[rand].ActionCard(enemyBody.GetBattleMaster().playerBody);
+                cardLists[rand].ActionCardNew(enemyBody.GetBattleMaster().playerBody);
                 SpawnCardName(cardData.name);
                 cardOnHand--;
             }
