@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: Knight
   healt: 100
   attackRoll: 2
-  damageRoll: 300
+  damageRoll: 3
   armorClass: 5
