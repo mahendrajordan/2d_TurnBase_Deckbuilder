@@ -17,7 +17,7 @@ pemain memiliki deck dengan 5 kartu di tangan, setiap kartu punya cost nya masin
 
 target awal adalah pemain dapat memilih kartu untuk menyerang musuh, jika sudah cost sudah tercapai maka end turn dan gilirian musuh jalan jika musuh sudah selesai jalan, maka masuk round baru dan di mulai dari player lagi.
 jika pemain kalah maka akan balik ke main menu.
-jika pemain menang akan masuk ke stage berikut nya, sebelum masuk player akan memilih satu dari 3 kartu baru.
+jika pemain menang akan masuk ke stage berikut nya, sebelum masuk player akan memilih satu dari 2 kartu baru.
 
 di dalam game terdiri 4 status utama, yaitu :
 healt -> nyawa character
@@ -25,12 +25,14 @@ attack roll -> akurasi serangan dengan formula 1d20 + attack roll
 damage roll -> damage bonus yg diberikan character
 armor class -> kemampuan memblokir/menghindar serangan 
 
-di game ini akurasi dan damage berdasrkan putaran dadu, dengan aturan 2d6 -> berarti 2 dadu dengan masing2 daru bernilai maksimal 6 dengan output range (2-12)
+di game ini akurasi dan damage berdasrkan putaran dadu, dengan aturan 2d6 -> berarti 2 dadu dengan masing2 dadu bernilai maksimal 6 dengan output range (2-12)
 
 target utama saat ini adalah bagaiman sistem deck bekerja, efek kartu yg bisa di berikan yaitu memberi damage, efek buff dan debuff, dan juga dot.
 
 # What I Would Do With More Time
-untuk kedepan direncanakan setiap lanjut ke stage berikut nya pemain akan memilih bonus stats tambahan, pembuatan jenis efek skill baru seperti yg simple increase die roll setiap 2 turn, atau disable jenis kartu tertentu.
+- untuk kedepan direncanakan setiap lanjut ke stage berikut nya pemain akan memilih bonus stats tambahan, 
+- membuatan jenis efek skill baru seperti yg simple increase die roll setiap 2 turn, atau disable jenis kartu tertentu,
+- sistem class/ character yg bisa memiliki sinergi dengan kartu tertentu, seperti Barbarian dengan trait reckless stance -> ketika menggunakan Rage attack roll +1, wizard dengan trait untraining hand -> kartu selain magic punya pinalty attack roll -1 tapi kartu bertipe magic memiliki bonus attack roll +1 
 
 # Known Issues
 - ketika select card ada kemungkinan kecil ketika di klik lagi malah menjalan kan action nya, ini sudah aku coba perbaiki di raycast kursor nya tapi belum yakin apakah itu dapat menyelsaikan masalah ini, untuk saat ini belum menemukan masalah ini lagi
