@@ -34,6 +34,8 @@ public class DeckBuilderMaster : MonoBehaviour
 
     Card CurrentCardSelect;
 
+    bool isDrawCardOnHand = false;
+
     void Awake()
     {
         cardDatas = DeckSaver.ins.CardDataList.ToArray();        
@@ -61,6 +63,7 @@ public class DeckBuilderMaster : MonoBehaviour
         int rand = 0;
         bool canUseThisCard = true;
         CardData cardData = null;
+        isDrawCardOnHand = true;
 
         for(int i = 0; i<cardAmount; i++)
         {
@@ -208,9 +211,12 @@ public class DeckBuilderMaster : MonoBehaviour
 #region End Turn
     public void EndTurn()
     {
+        if(battleMaster.GetTurnBaseSystem().GetWhoTurn() == WhoTurn.Enemy || !isDrawCardOnHand) return;
+
         RemoveAllCardOnHand();
         cardDataIdLimitUseList.Clear();
         battleMaster.GetTurnBaseSystem().PlayNextTurn();
+        isDrawCardOnHand = false;
     }
 #endregion
 
@@ -224,7 +230,7 @@ public class DeckBuilderMaster : MonoBehaviour
         cardOnHandkList.Remove(CurrentCardSelect);
         cardOnTrashkList.Add(CurrentCardSelect);
 
-        CurrentCardSelect.ActionCard(mainBody);
+        CurrentCardSelect.ActionCardNew(mainBody);
     }
 
     public List<Card> GetCardOnHand()=> cardOnHandkList;

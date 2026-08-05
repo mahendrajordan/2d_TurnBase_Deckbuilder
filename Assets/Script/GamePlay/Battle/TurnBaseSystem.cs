@@ -16,6 +16,7 @@ public class TurnBaseSystem : MonoBehaviour
     int round = 1;
     int maxTurn;
     int currentTurn;
+    WhoTurn whoTurn;
     bool isCheckingEffect = false;
 
     public void SetupTurnBaseSystem(PlayerBody _playerBody, EnemyBody[] _enemyBodys)
@@ -44,6 +45,7 @@ public class TurnBaseSystem : MonoBehaviour
             StartCoroutine(battleMaster.ShowTurnPanel("Your Turn"));
             yield return new WaitForSeconds(1);
             deckBuilderMaster.DrawCardOnHand();
+            whoTurn = WhoTurn.Player;
         }
         //enemy turn
         else
@@ -51,6 +53,7 @@ public class TurnBaseSystem : MonoBehaviour
             int n = currentTurn - 1;
             if(n==0) StartCoroutine(battleMaster.ShowTurnPanel("Enemy Turn"));
             yield return new WaitForSeconds(1);
+            whoTurn = WhoTurn.Enemy;
 
             enemyBodyList[n].GetEnemyBrain().PlayThisTurn();
         }
@@ -58,14 +61,14 @@ public class TurnBaseSystem : MonoBehaviour
 
     public void PlayNextTurn()
     {
+        if(battleMaster.gamePlayCondition != GamePlayCondition.Playing) return;
+
         currentTurn++;
         StartCoroutine(PlayTurn());
     }
 
     void NewRound()
     {
-        if(battleMaster.gamePlayCondition != GamePlayCondition.Playing) return;
-        
         currentTurn = 0;
         round++;
 
@@ -99,5 +102,7 @@ public class TurnBaseSystem : MonoBehaviour
 
     public PlayerBody GetPlayerBody()=> playerBody;
     public EnemyBody[] GetEnemyBody()=> enemyBodyList.ToArray();
+
+    public WhoTurn GetWhoTurn()=> whoTurn;
 
 }
