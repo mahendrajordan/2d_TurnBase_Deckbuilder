@@ -28,13 +28,15 @@ public class DeckBuilderMaster : MonoBehaviour
     [SerializeField] Transform cardOffParent;
     [SerializeField] Button endTurnBtn;
 
-    List<Card> cardOnHandkList = new List<Card>();
-    List<Card> cardOnTrashkList = new List<Card>();
+    List<Card> cardOnHandList = new List<Card>();
+    List<Card> cardOnTrashList = new List<Card>();
     List<int> cardDataIdLimitUseList = new List<int>();
 
     Card CurrentCardSelect;
 
     bool isDrawCardOnHand = false;
+
+    List<BasicCardData> basicCardDataCurrentRound = new List<BasicCardData>();
 
     void Awake()
     {
@@ -85,7 +87,11 @@ public class DeckBuilderMaster : MonoBehaviour
 
             card.Setup(cardDatas[rand], playerBody, cardHandParent, cardTrashParent, cardOffParent);
             card.GetMainInfo(this, battleMaster);
-            cardOnHandkList.Add(card);
+            cardOnHandList.Add(card);
+
+            BasicCardData basicCardData = basicCardDataCurrentRound.Find(x => x.cardId == cardDatas[rand].id);
+            if(basicCardData != null)
+                card.UpgradeStatsCard(basicCardData);
             
             card.gameObject.SetActive(true);
             card.SetCardHandIndex(i);
@@ -98,9 +104,9 @@ public class DeckBuilderMaster : MonoBehaviour
     int TotalThisCardOnHand(int index)
     {
         int n = 0;
-        for(int i=0; i<cardOnHandkList.Count; i++)
+        for(int i=0; i<cardOnHandList.Count; i++)
         {
-            if(cardOnHandkList[i].GetId() == cardDatas[index].id)
+            if(cardOnHandList[i].GetId() == cardDatas[index].id)
                 n++;
         }
         return n;
@@ -138,23 +144,23 @@ public class DeckBuilderMaster : MonoBehaviour
 
     public void RemoveAllCardOnHand()
     {
-        foreach(Card card in cardOnHandkList)
+        foreach(Card card in cardOnHandList)
         {
             StartCoroutine(MoveCardTo(card.transform, cardTrashParent, 0, 1, 0));                
-            cardOnTrashkList.Add(card);
+            cardOnTrashList.Add(card);
         }
-        cardOnHandkList.Clear();
+        cardOnHandList.Clear();
 
         Invoke("DestoryAllCardOnTrash", .5f);
     }
 
     void DestoryAllCardOnTrash()
     {
-        foreach(Card card in cardOnTrashkList)
+        foreach(Card card in cardOnTrashList)
         {
             poolingMaster.ReturnPoolObject(card.gameObject);
         }
-        cardOnTrashkList.Clear();
+        cardOnTrashList.Clear();
     }
 #endregion
 
@@ -183,9 +189,9 @@ public class DeckBuilderMaster : MonoBehaviour
 
     public void UnSelectAllCard()
     {
-        for(int i = 0; i< cardOnHandkList.Count; i++)
+        for(int i = 0; i< cardOnHandList.Count; i++)
         {
-            cardOnHandkList[i].UnSelectThisCard();
+            cardOnHandList[i].UnSelectThisCard();
         }
     }
 
@@ -217,6 +223,8 @@ public class DeckBuilderMaster : MonoBehaviour
         cardDataIdLimitUseList.Clear();
         battleMaster.GetTurnBaseSystem().PlayNextTurn();
         isDrawCardOnHand = false;
+
+        basicCardDataCurrentRound.Clear();
     }
 #endregion
 
@@ -227,11 +235,55 @@ public class DeckBuilderMaster : MonoBehaviour
         if(CurrentCardSelect == null) return;
 
         StartCoroutine(MoveCardTo(CurrentCardSelect.transform, cardTrashParent, 0, 1, 0));
-        cardOnHandkList.Remove(CurrentCardSelect);
-        cardOnTrashkList.Add(CurrentCardSelect);
+        cardOnHandList.Remove(CurrentCardSelect);
+        cardOnTrashList.Add(CurrentCardSelect);
 
         CurrentCardSelect.ActionCardNew(mainBody);
+    }    
+
+#region Bonus Stats Card
+    public void AddBonusStatsCard(int id, int diceAmount, int dicePoint, int bonusAttackRoll)
+    {
+        Debug.Log($"AddBonusStatsCard");
+        BasicCardData basicCardData = basicCardDataCurrentRound.Find(x => x.cardId == id) ;
+
+        if (basicCardData == null)
+        {
+            basicCardData = new BasicCardData
+            {
+                cardId = id
+            };
+            basicCardDataCurrentRound.Add(basicCardData);
+        }
+
+        basicCardData.diceAmount += diceAmount;
+        basicCardData.dicePoint += dicePoint; 
+        basicCardData.bonusAttackRoll += bonusAttackRoll;   
+
+        UpdateStatsCardOnHand(id, diceAmount, dicePoint, bonusAttackRoll);     
     }
 
-    public List<Card> GetCardOnHand()=> cardOnHandkList;
+    void UpdateStatsCardOnHand(int id, int diceAmount, int dicePoint, int bonusAttackRoll)
+    {
+        foreach(Card card in cardOnHandList)
+        {
+            if(card.GetCardData().id == id)
+            {
+                card.DiceAmount += diceAmount;
+                card.DicePoint += dicePoint;
+                card.BonusAttackRoll += bonusAttackRoll;
+            }
+        }
+    }
+#endregion
+
+    public List<Card> GetCardOnHand()=> cardOnHandList;
+}
+[System.Serializable]
+public class BasicCardData
+{
+    public int cardId;
+    public int diceAmount;
+    public int dicePoint;
+    public int bonusAttackRoll;
 }

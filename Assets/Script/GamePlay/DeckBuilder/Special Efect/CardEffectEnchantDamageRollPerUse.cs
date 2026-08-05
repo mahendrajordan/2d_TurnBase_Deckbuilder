@@ -10,32 +10,23 @@ public class CardEffectEnchantDamageRollPerUse : CardSpecialEffect
     [SerializeField] int enchantDiceAmountPerStack;
     [SerializeField] int enchantDiceValuePerStack;
 
-    int stack=0;
-
     public override void ActiveEffect()
     {
         base.ActiveEffect();
 
         List<Card> cardList = deckBuilderMaster.GetCardOnHand().ToList();
-        foreach(Card card in cardList)
-        {
-            if(card.GetCardData() == currentCard.GetCardData())
-            {
-                card.cardSpecialEffect.GetComponent<CardEffectEnchantDamageRollPerUse>().AddStack();
-            }
-        }
+        AddStack();
     }
 
     public void AddStack()
     {
-        stack++;
         switch(echantDamageRollType)
         {
             case EnchantDamageRollType.DiceAmount:
-                currentCard.DiceAmount+= enchantDiceValuePerStack;
+                deckBuilderMaster.AddBonusStatsCard(currentCard.GetCardData().id, enchantDiceValuePerStack, 0, 0);
                 break;
             case EnchantDamageRollType.DiceValue :
-                currentCard.DicePoint+= enchantDiceValuePerStack;
+                deckBuilderMaster.AddBonusStatsCard(currentCard.GetCardData().id, 0, enchantDiceValuePerStack, 0);
                 break;
         }
     }

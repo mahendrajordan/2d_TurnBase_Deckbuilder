@@ -88,6 +88,13 @@ public class Card : MonoBehaviour
     {
         handIndex = n;
     }
+
+    public void UpgradeStatsCard(BasicCardData basicCardData)
+    {
+        diceAmount += basicCardData.diceAmount;
+        dicePoint += basicCardData.dicePoint;
+        bonusAttackRoll += basicCardData.bonusAttackRoll;
+    }
 #endregion
 
 #region SelectCard
@@ -274,6 +281,6 @@ public class Card : MonoBehaviour
     public int AttackCount {get{return attackCount;} set{attackCount = value;}}
     public int DicePoint {get{return dicePoint;} set{dicePoint = value;}}
     public int DiceAmount {get{return diceAmount;} set{diceAmount = value;}}
-    public int BonusAttackRoll {get{return BonusAttackRoll;} set{BonusAttackRoll = value;}}
+    public int BonusAttackRoll {get{return bonusAttackRoll;} set{bonusAttackRoll = value;}}
     public BattleMaster BattleMaster {get{return battleMaster;} set{battleMaster = value;}}
 }

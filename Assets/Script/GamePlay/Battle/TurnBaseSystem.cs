@@ -106,3 +106,5 @@ public class TurnBaseSystem : MonoBehaviour
     public WhoTurn GetWhoTurn()=> whoTurn;
 
 }
+
+
