@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,6 +42,8 @@ public class HealtHandler : MonoBehaviour
         gamePlayHistory.CreateDamageInformation(whoLastHit, mainBody, totalDmg);
         SpawnDamage(totalDmg.ToString(), true);
         currentHealt -= totalDmg;
+
+        if(mainBody.GetConditonType() == ConditonType.Dead) return;
 
         if(currentHealt <= 0)
         {
